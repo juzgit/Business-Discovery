@@ -31,9 +31,15 @@ const Register = () =>{
     /**Display the form */
     return (
         <div>
-            <h2>Sign Up</h2>
+            
+            <div>
+                /**Information about the page goes here */
+            </div>
+
+
 
             <form onSubmit={submitForm}>
+                <h2>Sign Up</h2>
                 
                 <div>
                     <label>First Name</label>
