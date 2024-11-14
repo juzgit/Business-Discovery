@@ -1,18 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import '../styling/mystyling.scss';
 
 const Header = () => {
     return(
-        <header>
-            <nav>
-                <Link  to="/" /**add home page here link here */ >Website Name</Link> 
+        <div className='main-header'>
+            <div className='pltform-name'>
+                <h2 className='website-name'><a href='#home'>Website Name</a></h2>
+            </div>
 
-                <div>
-                    <Link /**Add user-login(default) or business login page here */ >Log In</Link>
-                    <Link /**Add business sign-up or user- here */ >Get Started</Link>
-                </div>
-            </nav>
-        </header>
+                <ul className='header-buttons-container'>
+                    <li className='header-buttons'><a href='#home'>Log In</a> </li>
+                    <li className='header-buttons'><a href='#home'>Get Started </a></li>
+                </ul>
+        </div>
     );
 };
 
