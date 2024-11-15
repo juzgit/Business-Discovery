@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styling/AboutSection.scss';
+import '../componentsStyling/AboutSection.scss';
 
 const AboutSection = () =>{
     const websiteName = "LocalConnect";

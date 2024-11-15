@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styling/JoinSection.scss';
+import '../componentsStyling/JoinSection.scss';
 
 const JoinSection = () => {
     return(
