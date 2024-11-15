@@ -8,8 +8,8 @@ const JoinSection = () => {
             <p>Sign up today and start discovering or sharing your local business!</p>
 
             <div>
-                <a href='#'>Sign Up as User</a>
-                <a href='#'>Sign Up as Business</a>
+                <a href='#home'>Sign Up as User</a>
+                <a href='#home'>Sign Up as Business</a>
             </div>
         </div>
     );
