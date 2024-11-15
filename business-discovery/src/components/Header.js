@@ -5,7 +5,7 @@ const Header = () => {
     return(
         <div className='main-header'>
             <div className='pltform-name'>
-                <h2 className='website-name'><a href='#home'>Website Name</a></h2>
+                <h2 className='website-name'><a href='#home'>LocalConnect</a></h2>
             </div>
 
                 <ul className='header-buttons-container'>
