@@ -1,16 +1,28 @@
+$gradient-start:  #92be9d;
+$gradient-end: #3e9152;
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+
 .join-section{
     text-align: center;
     padding: 2rem;
-    background-color: #f4f4f4;
+    background: linear-gradient(135deg, $gradient-start, $gradient-end);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px $gradient-end;
     margin: 2rem auto;
     max-width: 600px;
 }
 
 .join-section__title{
     font-size: 1.2rem;
-    color: #555;
+    color: $neutralColor1;
+    margin-bottom: 2rem;
+}
+
+.join-section__description{
+    color: $neutralColor1;
+    font-size: 1.2rem;
     margin-bottom: 2rem;
 }
 
@@ -23,7 +35,7 @@
 .join-section__link{
     font-size: 1.1rem;
     padding: 0.8rem 1.5rem;
-    background-color: #007BFF;
+    background-color: $primaryColor1;
     color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -31,5 +43,5 @@
 }
 
 .join-section__link:hover{
-    background-color: #0056B3;
+    background-color: $neutralColor2;
 }

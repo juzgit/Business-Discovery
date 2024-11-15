@@ -4,7 +4,7 @@ $gradient-end: #3e9152;
 $primaryColor1: #92be9d;
 $neutralColor1: #ffffff;
 $neutralColor2: #343A40;
-$box-shadow: 0 4px 8px rgba(0, 0, 0, 0.459);
+$box-shadow: 0 4px 8px $gradient-end;
 
 .about-section{
     padding: 2rem;

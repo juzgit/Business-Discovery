@@ -2,23 +2,27 @@ $myColor: red;
 $primaryColor1: #92be9d;
 $neutralColor1: #F8F9FA;
 $neutralColor2: #343A40;
+$gradient-start:  #92be9d;
+$gradient-end: #3e9152;
 
 .hero{
     padding: 20px;
     text-align: center;
-    background-color: #f4f4f4;
+    margin: 0 0 5px 5px;
+    background: linear-gradient(135deg, $gradient-start, $gradient-end);
+}
+
+.hero-text{
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.4;
+    color: $neutralColor1;
 }
 
 .hero-link{
     color: inherit;
     text-decoration: underline;
     font-size: inherit;
-}
-
-.my-sass{
-    font-size: 32px;
-    font-weight: bold;
-    line-height: 1.4;
 }
 
 @media (max-width: 1200px){
