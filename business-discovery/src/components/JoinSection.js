@@ -1,17 +1,18 @@
 import React from 'react';
+import '../styling/JoinSection.scss';
 
-const SignupSection = () => {
+const JoinSection = () => {
     return(
-        <section>
+        <div>
             <h2>Ready to Join?</h2>
             <p>Sign up today and start discovering or sharing your local business!</p>
 
-            <div /**These links are button */>
+            <div>
                 <a href='#'>Sign Up as User</a>
                 <a href='#'>Sign Up as Business</a>
             </div>
-        </section>
+        </div>
     );
 };
 
-export default SignupSection;
+export default JoinSection;
