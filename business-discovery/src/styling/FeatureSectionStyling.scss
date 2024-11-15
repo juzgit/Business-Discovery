@@ -1,3 +1,5 @@
+$primaryColor1: #92be9d;
+
 .features-section{
     padding: 20px;
     background-color: #f9f9f9;
@@ -26,12 +28,12 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
         &--user{
-            border-left: 4px solid#007BFF;
+            border-left: 4px solid $primaryColor1;
             margin-left: 10px;
         }
 
         &--business{
-            border-left: 4px solid #28A745;
+            border-left: 4px solid $primaryColor1;
             margin-right: 10px;
         }
 
