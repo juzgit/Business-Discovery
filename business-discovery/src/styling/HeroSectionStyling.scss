@@ -1,0 +1,46 @@
+$myColor: red;
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+
+.hero{
+    padding: 20px;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+.hero-link{
+    color: inherit;
+    text-decoration: underline;
+    font-size: inherit;
+}
+
+.my-sass{
+    font-size: 32px;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+@media (max-width: 1200px){
+    .my-sass {
+        font-size: 24px;
+        line-height: 1.3;
+    }
+
+    .hero{
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px){
+    .my-sass {
+        font-size: 20px;
+        line-height: 1.2;
+    }
+
+    .hero{
+        padding: 10px;
+    }
+}
+
+
