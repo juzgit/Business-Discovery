@@ -1,0 +1,104 @@
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+
+.business-reg-page{
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    min-height: 100vh;
+    background-color: $primaryColor1;
+
+    .business-features, .business-reg-form{
+        flex: 1;
+        padding: 1.5rem;
+        max-width: 400px;
+        border-radius: 8px;
+        background-color: lighten($neutralColor2, 40%);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-left: 8rem;
+        margin-top: 7rem;
+        max-height: 350px;
+    }
+
+    .business-features{
+        color: $neutralColor1;
+
+        .business-features-heading{
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: $neutralColor1;
+        }
+
+        .business-feature-listing{
+            list-style: none;
+            padding: 0;
+
+            li{
+                margin-bottom: 1rem;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .business-reg-form{
+        background-color: $neutralColor1;
+
+        .business-reg-form-heading{
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: $neutralColor2;
+        }
+
+        .form-row{
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+
+            .form-group{
+                flex: 1;
+
+                .label-group{
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    color: $neutralColor2;
+                }
+
+                .form-input, .form-input-select{
+                    width: 75%;
+                    padding: 0.5rem;
+                    border: 1px solid $neutralColor2;
+                    border-radius: 8px;
+                }
+
+                p{
+                    color: red;
+                    font-size: 0.875rem;
+                }
+            }
+        }
+
+        .submit-button{
+            width: 75%;
+            padding: 0.75rem;
+            background-color: $primaryColor1;
+            color: $neutralColor1;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover{
+                background-color: darken($primaryColor1, 10%);
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        flex-direction: column;
+        .business-features, .business-reg-form{
+            max-width: 100%;
+        }
+    }
+}
