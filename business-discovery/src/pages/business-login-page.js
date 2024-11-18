@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import '../pagesStyling/business-login.scss';
 
 const BusinessLogin = () => {
     const [formData, setFormData] = useState({
@@ -31,33 +32,36 @@ const BusinessLogin = () => {
     };
 
     return (
-        <div>
-            <h2>Business Login</h2>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label>Email</label>
+        <div className='business-login'>
+            <form onSubmit={handleLogin} className='business-login-form'>
+                
+                <h2 className='business-login-heading'>Business Login</h2>
+                <div className='form-group'>
+                    <label className='label-group'>Email</label>
                     <input
                         type='text'
                         name='email'
                         value={formData.email}
                         onChange={handleChange}
+                        className='form-input'
                     />
                     {errors.email && <p>{errors.email}</p>}
                 </div>
 
-                <div>
-                    <label>Password</label>
+                <div className='form-group'>
+                    <label className='label-group'>Password</label>
                     <input 
                     type='password'
                     name='password'
                     value={formData.password}
                     onChange={handleChange}
+                    className='form-input'
                     />
 
                     {errors.password && <p>{errors.password}</p>}
                 </div>
 
-                <button type='submit'>Login</button>
+                <button type='submit' className='submit-button'>Login</button>
             </form>
         </div>
     )
