@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import '../pagesStyling/user-login-page.scss';
 
-const Login = () => {
+const UserLogin = () => {
     const [formData, setFormData] = useState({
         email:'',
         password:''
@@ -21,36 +22,43 @@ const Login = () => {
 
 
     return(
-        <div>
-            <h2>Login</h2>
+        <div className="user-login-page">
+            <h2 className="user-login-heading">Login</h2>
 
-            <form onSubmit={submitLogin}>
-                <div>
-                    <label>Email</label>
+            <form onSubmit={submitLogin} className="user-login">
+                <div className="form-group">
+                    <label className="label-group">Email</label>
                     <input 
                     type="text"
                     name="emailAddress"
                     value={formData.email}
                     onChange={handleLogin}
+                    placeholder="Enter email"
+                    className="form-input"
+                    required
                     />
                 </div>
 
-                <div>
-                    <label>Password</label>
+                <div className="form-group">
+                    <label className="label-group">Password</label>
                     <input 
                     type="password"
                     name="password"
                     value={formData.password}
                     onChange={handleLogin}
+                    placeholder="Enter password"
+                    className="form-input"
+                    required
                     />
                 </div>
+
+                <button type="submit" className="submit-button">Login</button>
+
+                <p>Don't have an account? <a href="#home">Sign-up here</a></p>
             </form>
 
-            <button type="submit">Login</button>
-
-            <p>Don't have an account? Sign-up here</p>
         </div>
     );
 };
 
-export default Login
+export default UserLogin;
