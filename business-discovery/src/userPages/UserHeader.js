@@ -13,7 +13,6 @@ const UserNavBar = () => {
             <ul className="navbar-menu">
                 <li><a href="#home">Discover</a></li>
                 <li><a href="#home">Categories</a></li>
-                <li><a href="#home">Categories</a></li>
             </ul>
 
             <div className="navbar-search">
@@ -26,7 +25,6 @@ const UserNavBar = () => {
 
                 <div className="profile-dropdown">
                     <a href="#home">My profile</a>
-                    <a href="#home">Settings</a>
                     <a href="#home">Logout</a>
                 </div>
             </div>
