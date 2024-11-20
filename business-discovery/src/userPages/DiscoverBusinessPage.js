@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import UserNavBar from './UserHeader';
+import '../userPagesStyling/UserDiscoverBusiness.scss';
+import { FaSearch } from 'react-icons/fa';
 
-const DiscoverBusiness = () => {
+const UserDiscoverBusiness = () => {
     const [businesses, setBusinesses] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -17,6 +19,8 @@ const DiscoverBusiness = () => {
                 type='text'
                 placeholder='Search for businesses...'
                 />
+
+                <button className='search-btn'> <FaSearch /> </button>
             </div>
 
             <div className='business-list'>
@@ -37,4 +41,4 @@ const DiscoverBusiness = () => {
     );
 };
 
-export default DiscoverBusiness;
+export default UserDiscoverBusiness;
