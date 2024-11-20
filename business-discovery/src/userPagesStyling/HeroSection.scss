@@ -1,0 +1,33 @@
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+$gradient-start: #92be9d;
+$gradient-end: #3e9152;
+
+.heroSection-container{
+    padding: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, $gradient-start, $gradient-end);
+
+
+    .heroSection-text{
+        font-size: 32px;
+        font-weight: bold;
+        line-height: 1.4;
+        color: $neutralColor1;
+    }
+
+    .explore-button{
+        background-color: $primaryColor1;
+        border: none;
+        padding: 5px 15px;
+        cursor: pointer;
+        border-radius: 3px;
+        color: $neutralColor1;
+
+        &:hover{
+            background-color: darken($neutralColor2, 10%);
+        }
+    }
+}
+

@@ -1,11 +1,12 @@
 import React from "react";
 import UserNavBar from "./UserHeader";
-//import HeroSection from "../components/HeroSection";
+import UserHeroSection from "./UserHeroSection";
 
 const UserHomePage = () => {
     return(
         <div className="userHomePage">
             <UserNavBar />
+            <UserHeroSection />
         </div>
     );
 };
