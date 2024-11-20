@@ -1,0 +1,130 @@
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+
+.navbar{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $primaryColor1;
+    padding: 10px 20px;
+    color: $neutralColor1;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    .navbar-name{
+        margin-left: 50px;
+        
+        h1{
+            font-size: 24px;
+            color: $neutralColor1;
+        }
+    }
+
+    .navbar-menu{
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li{
+            margin: 0 10px;
+
+            a{
+                text-decoration: none;
+                color: $neutralColor1;
+                font-size: 18px;
+
+                &:hover{
+                    color:$neutralColor2
+                }
+            }
+        }
+    }
+
+    .navbar-search{
+        display: flex;
+        align-items: center;
+        margin-right: 100px;
+
+        .search-input{
+            padding: 5px 10px;
+            border: 1px solid $neutralColor1;
+            border-radius: 3px;
+            margin-right: 10px;
+            font-size: 14px;
+            background-color: $neutralColor1;
+            color: $neutralColor2;
+
+            &::placeholder{
+                color: $neutralColor2;
+            }
+        }
+
+        .submit-search{
+            background-color: $primaryColor1;
+            border: none;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 3px;
+            color: $neutralColor1;
+
+            &:hover{
+                background-color: darken($neutralColor2, 10%);
+            }
+        }
+    }
+
+    .nav-profile{
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin-right: 100px;
+
+        .profile-icon{
+            font-size: 24px;
+            color: $neutralColor1;
+
+            &:hover{
+                color: $neutralColor2;
+            }
+        }
+
+        .profile-dropdown{
+            display: none;
+            position: absolute;
+            left: 50%;
+            top:100%;
+            transform: translate(-50%);
+            width: 160px;
+            background-color: $neutralColor2;
+            color: $neutralColor1;
+            padding: 10px 15px;
+            border-radius: 6px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+
+            a{
+                display: block;
+                text-decoration: none;
+                text-align: center;
+                color: $neutralColor1;
+                font-size: 16px;
+                padding: 10px 0;
+
+                &:hover{
+                    color: $primaryColor1;
+                    background-color: $neutralColor1;
+                    border-radius: 3px;
+                }
+            }
+        }
+
+        &:hover .profile-dropdown{
+            display: block;
+        }
+    }
+}

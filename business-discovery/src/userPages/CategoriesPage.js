@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import UserNavBar from "./UserHeader";
 
 const CategoriesPage = () => {
     const [categories, setCategories] = useState([]);
@@ -6,6 +7,8 @@ const CategoriesPage = () => {
     //Add API here
     return(
         <div className="categories-page">
+
+            <UserNavBar />
             
             <h2 className="category-heading">Explore Categories</h2>
 

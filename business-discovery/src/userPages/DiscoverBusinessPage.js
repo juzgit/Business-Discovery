@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import UserNavBar from './UserHeader';
 
 const DiscoverBusiness = () => {
     const [businesses, setBusinesses] = useState([]);
@@ -7,6 +8,8 @@ const DiscoverBusiness = () => {
 
     return(
         <div className='discover-page'>
+
+            <UserNavBar />
             
             <div className='discover-header'>
                 <h2 className='discover-heading'>Discover Local Businesses</h2>

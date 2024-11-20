@@ -1,4 +1,6 @@
 import React from "react";
+import '../userPagesStyling/userHeader.scss';
+import { FaSearch, FaUserCircle } from "react-icons/fa";
 
 const UserNavBar = () => {
     return(
@@ -16,12 +18,14 @@ const UserNavBar = () => {
             </ul>
 
             <div className="navbar-search">
-                <input type="text" placeholder="Search businesses..."  className="search-button" />
-                <button className="submit-search"></button>
+                <input type="text" 
+                placeholder="Search businesses..."  
+                className="search-input" />
+                <button className="submit-search"> <FaSearch /> </button>
             </div>
 
             <div className="nav-profile">
-             (/**Add profile image */)
+                <FaUserCircle className="profile-icon" />
 
                 <div className="profile-dropdown">
                     <a href="#home">My profile</a>
