@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UserNavBar from './UserHeader';
 import '../userPagesStyling/UserDiscoverBusiness.scss';
 import { FaSearch } from 'react-icons/fa';
@@ -6,6 +6,21 @@ import { FaSearch } from 'react-icons/fa';
 const UserDiscoverBusiness = () => {
     const [businesses, setBusinesses] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+
+    const mockBusinesses = [
+        { id: 1, name: 'Cafe Delight', category: 'Cafe', location: 'Downtown' },
+        { id: 2, name: 'Tech Store', category: 'Electronics', location: 'Uptown' },
+        { id: 3, name: 'Fitness Hub', category: 'Gym', location: 'Suburbs' },
+        { id: 4, name: 'Book Nook', category: 'Bookstore', location: 'Uptown' },
+      ];
+
+      useEffect(() => {
+        setBusinesses(
+            mockBusinesses.filter(business => 
+                business.name.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+        );
+      }, [searchQuery]);
 
 
     return(
@@ -18,6 +33,8 @@ const UserDiscoverBusiness = () => {
                 <input 
                 type='text'
                 placeholder='Search for businesses...'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 />
 
                 <button className='search-btn'> <FaSearch /> </button>
