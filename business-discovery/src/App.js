@@ -3,14 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //import UserNavBar from "./userPages/UserHeader";
 //import HeroSection from "./userPages/HeroSection";
 //import UserHomePage from "./userPages/HomePageUser";
-import UserDiscoverBusiness from "./userPages/DiscoverBusinessPage";
+//import UserDiscoverBusiness from "./userPages/DiscoverBusinessPage";
+import CategoriesPage from "./userPages/CategoriesPage";
 
 function App() {
   return (
     <div className="App">
         <Router>
             <Routes>
-            <Route path="/" element={<UserDiscoverBusiness />} />
+            <Route path="/" element={<CategoriesPage />} />
             </Routes>
         </Router>
     </div>
