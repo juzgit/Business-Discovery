@@ -1,0 +1,119 @@
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+
+.profile-page{
+    background-color: $neutralColor1;
+    color: $neutralColor2;
+    font-family: Arial, sans-serif;
+    padding: 3px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .profile-header{
+        background-color: $neutralColor2;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        .profile-info{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            
+
+            h2{
+                font-size: 24px;
+                margin-bottom: 10px;
+                color: $neutralColor1;
+            }
+
+            p{
+                margin: 5px 0;
+                font-size: 16px;
+                color: $neutralColor1;
+                text-align: center;
+                background-color: $primaryColor1;
+                padding: 5px;
+            }
+
+            .form-group{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 15px;
+                width: 100%;
+
+                .label-group{
+                   display: block;
+                   font-weight: bold;
+                   margin-bottom: 5px; 
+                   color: $primaryColor1;
+                }
+
+                input, textarea{
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid $neutralColor2;
+                    border-radius: 5px;
+                    font-size: 14px;
+                }
+
+                textarea{
+                    resize: none;
+                    height: 80px;
+                }
+            }
+
+            .save-btn,
+            .edit-btn {
+                display: inline-flex;
+                align-items: center;
+                background-color: $neutralColor1;
+                color: $primaryColor1;
+                border: none;
+                padding: 10px 15px;
+                border-radius: 5px;
+                margin-top: 8px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover{
+                    background-color: darken($neutralColor2, 10%);
+                }
+
+                svg{
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+
+    .logout-btn{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $primaryColor1;
+        color: $neutralColor1;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s;
+
+        &:hover{
+            background-color: darken($primaryColor1, 10%);
+        }
+
+        svg{
+            margin-left: 5px;
+        }
+    }
+}
