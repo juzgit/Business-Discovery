@@ -6,7 +6,7 @@ const BusinessUserHP = () => {
             
             <div className="header">
                 <div className="business-name-header">
-                    <h2 className="business-name">Business Name</h2>
+                    <h2 className="business-name">LocalConnect</h2>
                 </div>
 
                 <div className="user-profile">
@@ -34,26 +34,26 @@ const BusinessUserHP = () => {
 
                         <div className="metric">
                             <h3 className="rating-heading">Average Rating</h3>
-                            <p>(/**Display average rating over here */)</p>
+                            <p>{/**Display average rating over here */}</p>
                         </div>
 
                         <div className="metric">
                             <h3 className="recent-rev-heading">Recent Reviews</h3>
-                            <p>(/**Display new ratings */) views</p>
+                            <p>{/**Display new ratings */} views</p>
                         </div>
                     </div>
 
                     <div className="actions">
                         <button className="action-btn">
-                            (/**Link to the Promotion Page */)
+                            {/**Link to the Promotion Page */}
                         </button>
 
                         <button className="action-btn">
-                            (/**Link to the Profile Page */)
+                            {/**Link to the Profile Page */}
                         </button>
 
                         <button className="action-btn">
-                            (/**Link to the Reviews page */)
+                            {/**Link to the Reviews page */}
                         </button>
                     </div>
                 </div>
