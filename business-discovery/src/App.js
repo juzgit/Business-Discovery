@@ -6,14 +6,16 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //import UserDiscoverBusiness from "./userPages/DiscoverBusinessPage";
 //import CategoriesPage from "./userPages/CategoriesPage";
 //import UserProfile from "./userPages/UserProfilePage";
-import BusinessUserHP from "./BusinessPages/BusinessUserHP";
+//import BusinessUserHP from "./BusinessPages/BusinessUserHP";
+
+import BusinessProfile from "./BusinessPages/BusinessProfile";
 
 function App() {
   return (
     <div className="App">
         <Router>
             <Routes>
-            <Route path="/" element={<BusinessUserHP />} />
+            <Route path="/" element={<BusinessProfile />} />
             </Routes>
         </Router>
     </div>

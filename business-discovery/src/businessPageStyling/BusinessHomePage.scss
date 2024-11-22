@@ -7,72 +7,7 @@ $neutralColor2: #343A40;
     color: $neutralColor2;
     font-family: Arial, sans-serif;
 
-    .header{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        background-color: $primaryColor1;
-        color: $neutralColor1;
-
-        .business-name-header{
-            .business-name{
-                font-size: 24px;
-                font-weight: bold;
-            }
-        }
-
-        .user-profile{
-            display: flex;
-            align-items: center;
-            gap: 15px;
-
-            .log-out-btn{
-                background-color: $neutralColor2;
-                color: $primaryColor1;
-                border: none;
-                padding: 10px 15px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 14px;
-
-                &:hover{
-                    background-color: darken($neutralColor1, 10%);
-                    color: lighten($neutralColor2, 10%);
-                }
-            }
-        }
-
-        .actions{
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: space-between;
-
-            .action-btn{
-                background-color: $neutralColor2;
-                color: $neutralColor1;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 16px;
-
-                a{
-                    text-decoration: none;
-                    color: $primaryColor1;
-                }
-
-                &:hover{
-                    background-color: darken($neutralColor1, 10%);
-                    color: lighten($neutralColor2, 10%);
-                }
-            }
-        }
-
-    }
-
+    
     .dashboard{
         display: flex;
 
@@ -80,32 +15,6 @@ $neutralColor2: #343A40;
             font-size: 32px;
             margin-bottom: 20px;
             text-align: center;
-        }
-
-        .sidebar{
-            width: 20%;
-            background-color: $neutralColor2;
-            color: $neutralColor1;
-            padding: 20px;
-
-            .side-links{
-                list-style: none;
-                padding: 0;
-
-                li{
-                    margin: 10px 0;
-
-                    a{
-                        color: $neutralColor1;
-                        text-decoration: none;
-                        font-size: 16px;
-
-                        &:hover{
-                            text-decoration: underline;
-                        }
-                    }
-                }
-            }
         }
 
         .main-content{

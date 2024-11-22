@@ -1,0 +1,73 @@
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: $primaryColor1;
+    color: $neutralColor1;
+
+    .business-name-header{
+        .business-name{
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
+
+    .user-profile{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .log-out-btn{
+            background-color: $neutralColor2;
+            color: $primaryColor1;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 11px;
+
+            &:hover{
+                background-color: darken($neutralColor1, 10%);
+                color: lighten($neutralColor2, 10%);
+            }
+
+            svg{
+                margin-left: 5px;
+            }
+        }
+    }
+
+    .actions{
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .action-btn{
+            background-color: $neutralColor2;
+            color: $neutralColor1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+
+            a{
+                text-decoration: none;
+                color: $primaryColor1;
+            }
+
+            &:hover{
+                background-color: darken($neutralColor1, 10%);
+                color: lighten($neutralColor2, 10%);
+            }
+        }
+    }
+
+}
