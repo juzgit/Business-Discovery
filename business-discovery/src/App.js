@@ -9,14 +9,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //import BusinessUserHP from "./BusinessPages/BusinessUserHP";
 
 //import BusinessProfile from "./BusinessPages/BusinessProfile";
-import BusinessPromotions from "./BusinessPages/PromotionsPage";
+//import BusinessPromotions from "./BusinessPages/PromotionsPage";
+import BusinessReviews from "./BusinessPages/ReviewsPage";
 
 function App() {
   return (
     <div className="App">
         <Router>
             <Routes>
-            <Route path="/" element={<BusinessPromotions />} />
+            <Route path="/" element={<BusinessReviews />} />
             </Routes>
         </Router>
     </div>

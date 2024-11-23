@@ -1,0 +1,75 @@
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+
+.page-layout{
+    display: flex;
+    flex-direction: column;
+    background-color: $neutralColor1;
+    font-family: Arial, sans-serif;
+
+    .header-container{
+        background-color: $primaryColor1;
+        padding: 20px;
+        text-align: center;
+
+        h1{
+            color: $neutralColor1;
+        }
+    }
+
+    .main-content{
+        display: flex;
+
+        .sidebar-container{
+            background-color: $neutralColor2;
+            color: $neutralColor1;
+            width: 230px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .reviews-page{
+            flex: 1;
+            padding: 40px;
+
+            .reviews-page-heading{
+                font-size: 2rem;
+                color: $primaryColor1;
+                margin-bottom: 15px;
+            }
+
+            .reviews-list{
+                list-style: none;
+                padding: 0;
+
+                .review-item{
+                    background-color: $primaryColor1;
+                    color: $neutralColor1;
+                    margin-bottom: 20px;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+                    .reviewer-name{
+                        font-size: 1.2rem;
+                        font-weight: bold;
+                        color: $neutralColor1;
+                        margin-bottom: 5px;
+                    }
+
+                    .review-rating{
+                        font-size: 1rem;
+                        color: darken($neutralColor2, 10%);
+                        margin-bottom: 10px;
+                    }
+
+                    .review-comment{
+                        font-size: 1rem;
+                        font-style: italic;
+                    }
+                }
+            }
+        }
+    }
+}
