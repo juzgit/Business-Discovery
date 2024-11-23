@@ -8,14 +8,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //import UserProfile from "./userPages/UserProfilePage";
 //import BusinessUserHP from "./BusinessPages/BusinessUserHP";
 
-import BusinessProfile from "./BusinessPages/BusinessProfile";
+//import BusinessProfile from "./BusinessPages/BusinessProfile";
+import BusinessPromotions from "./BusinessPages/PromotionsPage";
 
 function App() {
   return (
     <div className="App">
         <Router>
             <Routes>
-            <Route path="/" element={<BusinessProfile />} />
+            <Route path="/" element={<BusinessPromotions />} />
             </Routes>
         </Router>
     </div>
