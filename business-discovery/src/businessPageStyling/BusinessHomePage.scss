@@ -2,57 +2,117 @@ $primaryColor1: #92be9d;
 $neutralColor1: #F8F9FA;
 $neutralColor2: #343A40;
 
-.business-home{
-    background-color: $neutralColor1;
-    color: $neutralColor2;
-    font-family: Arial, sans-serif;
+.business-home {
+  display: flex;
+  flex-direction: column;
+  background-color: $neutralColor1;
+  font-family: Arial, sans-serif;
 
-    
-    .dashboard{
-        display: flex;
+  .business-header {
+    background-color: $primaryColor1;
+    color: $neutralColor1;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
 
-        .user-dashboard{
-            font-size: 32px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+  .dashboard-container {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
 
-        .main-content{
-            width: 80%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            
-            .user-dashboard{
-                font-size: 32px;
-                margin-bottom: 20px;
-                text-align: center;
-            }
+    .heading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px; // Adjust for desired height
+      background-color: $primaryColor1;
+      color: $neutralColor1;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
 
-            .metrics{
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                width: 85%;
-
-                .metric{
-                    width: 30%;
-                    background-color: lighten($primaryColor1, 20%);
-                    padding: 15px;
-                    border-radius: 10px;
-                    text-align: center;
-
-                    h3{
-                        font-size: 18px;
-                        margin-bottom: 10px;
-                    }
-
-                    p{
-                        font-size: 14px;
-                    }
-                }
-            }
-        }
+      .user-dashboard {
+        font-size: 2.5rem;
+        font-weight: bold;
+      }
     }
+
+    .dashboard {
+      display: flex;
+
+      .sidebar {
+        flex: 0 0 250px;
+        background-color: $neutralColor2;
+        color: $neutralColor1;
+        padding: 20px;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 20px;
+        margin-left: 20px;
+        background-color: $neutralColor1;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        .metrics {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 20px;
+
+          .metric {
+            background-color: $primaryColor1;
+            border: 1px solid darken($primaryColor1, 10%);
+            border-radius: 8px;
+            padding: 20px;
+            color: $neutralColor2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+            &:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h3 {
+              font-size: 1.2rem;
+              margin-bottom: 10px;
+            }
+
+            ul {
+              list-style: none;
+              padding: 0;
+
+              li {
+                font-size: 0.9rem;
+                margin: 5px 0;
+              }
+            }
+
+            p {
+              font-size: 1rem;
+              margin-top: 10px;
+            }
+
+            .reviews-button {
+              margin-top: 15px;
+              padding: 10px 15px;
+              background-color: darken($primaryColor1, 10%);
+              color: $neutralColor1;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              font-size: 0.9rem;
+
+              &:hover {
+                background-color: lighten($primaryColor1, 5%);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
