@@ -4,6 +4,7 @@ $neutralColor2: #343A40;
 
 .header{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
@@ -11,16 +12,48 @@ $neutralColor2: #343A40;
     color: $neutralColor1;
 
     .business-name-header{
+        flex: 1;
         .business-name{
             font-size: 24px;
             font-weight: bold;
         }
     }
 
+    .actions{
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        flex: 2;
+
+        .action-btn{
+            background-color: $neutralColor2;
+            color: $neutralColor1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+
+            a{
+                text-decoration: none;
+                color: $primaryColor1;
+            }
+
+            &:hover{
+                background-color: darken($neutralColor1, 10%);
+                color: lighten($neutralColor2, 10%);
+            }
+        }
+    }
+
     .user-profile{
         display: flex;
         align-items: center;
+        justify-content: flex-end;
         gap: 15px;
+        flex: 1;
+        margin-left: auto;
 
         .log-out-btn{
             background-color: $neutralColor2;
@@ -43,29 +76,41 @@ $neutralColor2: #343A40;
         }
     }
 
-    .actions{
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: space-between;
+    @media (max-width: 768px){
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
 
-        .action-btn{
-            background-color: $neutralColor2;
-            color: $neutralColor1;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
+        .business-name-header{
+            width: 100%;
+            text-align: center;
 
-            a{
-                text-decoration: none;
-                color: $primaryColor1;
+            .business-name{
+                font-size: 20px;
             }
+        }
 
-            &:hover{
-                background-color: darken($neutralColor1, 10%);
-                color: lighten($neutralColor2, 10%);
+        .actions{
+            justify-content: center;
+            width: 100%;
+            gap: 10px;
+
+            .action-btn{
+                width: 150px;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+
+        .user-profile{
+            justify-content: center;
+            width: 100%;
+            margin-top: 10px;
+
+            .log-out-btn{
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
             }
         }
     }

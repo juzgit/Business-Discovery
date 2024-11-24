@@ -72,4 +72,86 @@ $neutralColor2: #343A40;
             }
         }
     }
+
+    @media (max-width: 1024px){
+        .main-content{
+            flex-direction: column;
+            .sidebar-container{
+                width: 100%;
+                min-height: auto;
+                padding: 10px;
+            }
+
+            .reviews-page{
+                padding: 20px;
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        .header-container{
+            padding: 15px;
+
+            h1{
+                font-size: 1.5rem;
+            }
+        }
+
+        .main-content{
+            .sidebar-container{
+                padding: 5px;
+                text-align: center;
+            }
+
+            .reviews-page{
+                .reviews-page-heading{
+                    font-size: 1.8rem;
+                }
+
+                .reviews-list-heading{
+                    font-size: 1.3rem;
+                }
+
+                .review-item{
+                    padding: 15px;
+                    .reviewer-name{
+                        font-size: 1rem;
+                    }
+
+                    .review-rating,
+                    .review-comment{
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 480px){
+        .main-content{
+            .reviews-page{
+                padding: 10px;
+
+                .reviews-page-heading{
+                    font-size: 1.5rem;
+                }
+
+                .reviews-list-heading{
+                    font-size: 1.2rem;
+                }
+
+                .review-item{
+                    padding: 10px;
+                    .reviewer-name{
+                        font-size: 0.9rem;
+                    }
+
+                    .review-rating,
+                    .review-comment{
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+    }
 }
