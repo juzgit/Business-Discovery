@@ -116,3 +116,60 @@ $neutralColor2: #343A40;
   }
 }
 
+@media screen and (max-width: 768px){
+    .dashboard{
+        flex-direction: column;
+
+        .sidebar{
+            margin-bottom: 20px;
+            flex: none;
+        }
+    }
+
+    .heading-container{
+        height: auto;
+        padding: 20px 10px;
+
+        .user-dashboard{
+            font-size: 2rem;
+        }
+    }
+}
+
+@media screen and (max-width: 480px){
+    .dashboard{
+        .main-content{
+            padding: 10px;
+        }
+
+        .metrics{
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .metric{
+            padding: 15px;
+
+            h3{
+                font-size: 1rem;
+            }
+
+            p{
+                font-size: 1rem;
+            }
+
+            .reviews-button{
+                font-size: 0.8rem;
+                padding: 8px 10px;
+            }
+        }
+    }
+
+    .heading-container{
+        padding: 10px;
+
+        .user-dashboard{
+            font-size: 1.5rem;
+        }
+    }
+}
