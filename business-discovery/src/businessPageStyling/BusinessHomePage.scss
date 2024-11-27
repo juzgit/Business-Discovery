@@ -40,19 +40,9 @@ $neutralColor2: #343A40;
     .dashboard {
       display: flex;
 
-      .sidebar {
-        flex: 0 0 250px;
-        background-color: $neutralColor2;
-        color: $neutralColor1;
-        padding: 20px;
-        height: auto;
-        border-radius: 8px;
-      }
-
       .main-content {
         flex: 1;
         padding: 20px;
-        margin-left: 20px;
         background-color: $neutralColor1;
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -120,10 +110,6 @@ $neutralColor2: #343A40;
     .dashboard{
         flex-direction: column;
 
-        .sidebar{
-            margin-bottom: 20px;
-            flex: none;
-        }
     }
 
     .heading-container{

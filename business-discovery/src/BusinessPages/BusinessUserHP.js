@@ -1,7 +1,6 @@
 import React from "react";
 import '../businessPageStyling/BusinessHomePage.scss';
 import BusinessHeader from "./BusinessHeader";
-import BusinessSidebar from "./BusinessMenuHeaderComponent";
 
 const BusinessUserHP = () => {
 
@@ -26,10 +25,6 @@ const BusinessUserHP = () => {
                 </div>
                 
                 <div className="dashboard">
-
-                    <div className="sidebar">
-                        <BusinessSidebar/>
-                    </div>
             
                     <div className="main-content">
                     

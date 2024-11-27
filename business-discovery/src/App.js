@@ -9,18 +9,18 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
 //import BusinessUserHP from "./BusinessPages/BusinessUserHP";
-import BusinessHeader from "./BusinessPages/BusinessHeader";
+//import BusinessHeader from "./BusinessPages/BusinessHeader";
 //import BusinessMenuHeader from "./BusinessPages/BusinessMenuHeaderComponent";
 //import BusinessProfile from "./BusinessPages/BusinessProfile";
 //import BusinessPromotions from "./BusinessPages/PromotionsPage";
-//import BusinessReviews from "./BusinessPages/ReviewsPage";
+import BusinessReviews from "./BusinessPages/ReviewsPage";
 
 function App() {
   return (
     <div className="App">
         <Router>
             <Routes>
-            <Route path="/" element={<BusinessHeader />} />
+            <Route path="/" element={<BusinessReviews />} />
             </Routes>
         </Router>
     </div>

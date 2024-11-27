@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import BusinessHeader from "./BusinessHeader";
-import BusinessSidebar from "./BusinessMenuHeaderComponent";
 import '../businessPageStyling/BusinessPromotions.scss';
 
 const BusinessPromotions = () => {
@@ -48,9 +47,6 @@ const BusinessPromotions = () => {
             </div>
 
             <div className="main-content">
-                <div className="sidebar-container">
-                    <BusinessSidebar />
-                </div>
 
                     <div className="promotionPage-container">
                         <div className="promotionPage">

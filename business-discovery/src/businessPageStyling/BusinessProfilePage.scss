@@ -20,23 +20,6 @@ $neutralColor2: #343A40;
         display: flex;
         flex: 1;
 
-        .sidebar-container{
-            width: 250px;
-            background-color: $neutralColor2;
-            color: $neutralColor1;
-            padding: 1rem;
-            border-right: 1px solid lighten($neutralColor2, 20%);
-
-            a{
-                color: $neutralColor1;
-                text-decoration: none;
-
-                &:hover{
-                    text-decoration: underline;
-                }
-            }
-        }
-
         .profile-page{
             flex: 1;
             background-color: $neutralColor1;

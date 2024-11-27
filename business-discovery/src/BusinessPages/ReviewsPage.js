@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import BusinessHeader from './BusinessHeader';
-import BusinessSidebar from './BusinessMenuHeaderComponent';
 import '../businessPageStyling/BusinessReviews.scss';
 
 const BusinessReviews = () => {
@@ -36,10 +35,6 @@ const BusinessReviews = () => {
             </div>
 
             <div className='main-content'>
-
-                    <div className='sidebar-container'>
-                        <BusinessSidebar />
-                    </div>
 
                     <div className='reviews-page'>
                         <h1 className='reviews-page-heading'>Customer Reviews</h1>

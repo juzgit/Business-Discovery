@@ -21,14 +21,6 @@ $neutralColor2: #343A40;
     .main-content{
         display: flex;
 
-        .sidebar-container{
-            background-color: $neutralColor2;
-            color: $neutralColor1;
-            width: 230px;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
         .reviews-page{
             flex: 1;
             padding: 40px;

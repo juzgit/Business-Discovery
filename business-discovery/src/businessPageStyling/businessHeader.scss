@@ -6,7 +6,7 @@ $neutralColor2: #343A40;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: $neutralColor2;
+    background-color: $primaryColor1;
     color: $neutralColor1;
     padding: 10px 20px;
 
@@ -25,7 +25,7 @@ $neutralColor2: #343A40;
                 align-items: center;
 
                 &:hover{
-                    color: $primaryColor1;
+                    color: $neutralColor2;
                 }
             }
 
@@ -39,7 +39,7 @@ $neutralColor2: #343A40;
                 margin: 0;
                 border-radius: 5px;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-                min-width: 150px;
+                width: 170px;
                 
                 li{
                     margin: 0;
@@ -49,6 +49,7 @@ $neutralColor2: #343A40;
                         color: $neutralColor2;
                         text-decoration: none;
                         font-size: 1rem;
+                        padding: 5px;
 
                         &:hover{
                             background-color: $primaryColor1;
@@ -76,7 +77,7 @@ $neutralColor2: #343A40;
             cursor: pointer;
     
             &:hover{
-                color: $primaryColor1;
+                color: $neutralColor2;
             }
         }
     }
