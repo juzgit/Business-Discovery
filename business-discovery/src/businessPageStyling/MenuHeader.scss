@@ -1,0 +1,51 @@
+$primaryColor1: #92be9d;
+$neutralColor1: #F8F9FA;
+$neutralColor2: #343A40;
+
+.menu-header{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 15%;
+
+    .menu-icon{
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: $neutralColor1;
+
+        &:hover{
+            color: $primaryColor1;
+        }
+    }
+
+    .menu-links{
+        position: absolute;
+        top: 40px;
+        left: 0;
+        background-color: $neutralColor1;
+        list-style: none;
+        color: $neutralColor2;
+        padding: 8px 0;
+        margin: 0;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        min-width: 150px;
+
+        li{
+            margin: 10px 0;
+            padding: 8px 12px;
+
+            a{
+                color: $neutralColor2;
+                text-decoration: none;
+                font-size: 1rem;
+
+                &:hover{
+                    background-color: $primaryColor1;
+                    color: $neutralColor1;
+                    border-radius: 4px;
+                }
+            }
+        }
+    }
+}

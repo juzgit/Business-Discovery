@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../businessPageStyling/BusinessProfilePage.scss';
 import { FaEdit, FaSave } from 'react-icons/fa';
 import BusinessHeader from './BusinessHeader';
-import BusinessSidebar from './BusinessSideBarComponent';
+import BusinessSidebar from './BusinessMenuHeaderComponent';
 
 const BusinessProfile = () => {
     //mock business data

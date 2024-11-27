@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BusinessHeader from './BusinessHeader';
-import BusinessSidebar from './BusinessSideBarComponent';
+import BusinessSidebar from './BusinessMenuHeaderComponent';
 import '../businessPageStyling/BusinessReviews.scss';
 
 const BusinessReviews = () => {

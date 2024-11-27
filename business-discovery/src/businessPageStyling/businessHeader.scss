@@ -4,115 +4,80 @@ $neutralColor2: #343A40;
 
 .header{
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: $primaryColor1;
+    background-color: $neutralColor2;
     color: $neutralColor1;
+    padding: 10px 20px;
 
-    .business-name-header{
-        flex: 1;
-        .business-name{
-            font-size: 24px;
-            font-weight: bold;
-        }
-    }
-
-    .actions{
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        flex: 2;
-
-        .action-btn{
-            background-color: $neutralColor2;
-            color: $neutralColor1;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-
-            a{
-                text-decoration: none;
-                color: $primaryColor1;
-            }
-
-            &:hover{
-                background-color: darken($neutralColor1, 10%);
-                color: lighten($neutralColor2, 10%);
-            }
-        }
-    }
-
-    .user-profile{
+    .header-left{
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        gap: 15px;
-        flex: 1;
-        margin-left: auto;
 
+        .menu-header{
+            margin-right: 15px;
+
+            .menu-icon{
+                font-size: 1.5rem;
+                color: $neutralColor1;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+
+                &:hover{
+                    color: $primaryColor1;
+                }
+            }
+
+            .menu-links{
+                position: absolute;
+                top: 50px;
+                left: 10px;
+                background-color: $neutralColor1;
+                list-style: none;
+                padding: 10px 0;
+                margin: 0;
+                border-radius: 5px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+                min-width: 150px;
+                
+                li{
+                    margin: 0;
+                    padding: 8px 12px;
+
+                    a{
+                        color: $neutralColor2;
+                        text-decoration: none;
+                        font-size: 1rem;
+
+                        &:hover{
+                            background-color: $primaryColor1;
+                            color: $neutralColor1;
+                            border-radius: 4px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .business-name{
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: $neutralColor1;
+        }
+    }
+
+    .header-right{
         .log-out-btn{
-            background-color: $neutralColor2;
-            color: $primaryColor1;
+            background-color: transparent;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            color: $neutralColor1;
+            font-size: 1rem;
             cursor: pointer;
-            font-size: 14px;
-            margin-right: 11px;
-
+    
             &:hover{
-                background-color: darken($neutralColor1, 10%);
-                color: lighten($neutralColor2, 10%);
-            }
-
-            svg{
-                margin-left: 5px;
+                color: $primaryColor1;
             }
         }
     }
-
-    @media (max-width: 768px){
-        flex-direction: column;
-        align-items: stretch;
-        gap: 20px;
-
-        .business-name-header{
-            width: 100%;
-            text-align: center;
-
-            .business-name{
-                font-size: 20px;
-            }
-        }
-
-        .actions{
-            justify-content: center;
-            width: 100%;
-            gap: 10px;
-
-            .action-btn{
-                width: 150px;
-                max-width: 300px;
-                text-align: center;
-            }
-        }
-
-        .user-profile{
-            justify-content: center;
-            width: 100%;
-            margin-top: 10px;
-
-            .log-out-btn{
-                width: 100%;
-                max-width: 300px;
-                text-align: center;
-            }
-        }
-    }
-
 }

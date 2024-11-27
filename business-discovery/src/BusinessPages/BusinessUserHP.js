@@ -1,7 +1,7 @@
 import React from "react";
 import '../businessPageStyling/BusinessHomePage.scss';
 import BusinessHeader from "./BusinessHeader";
-import BusinessSidebar from "./BusinessSideBarComponent";
+import BusinessSidebar from "./BusinessMenuHeaderComponent";
 
 const BusinessUserHP = () => {
 
