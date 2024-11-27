@@ -81,3 +81,40 @@ $neutralColor2: #343A40;
         }
     }
 }
+
+@media (max-width: 768px){
+    .header{
+        flex-direction: column;
+        padding: 10px;
+
+        .header-left{
+            .business-name{
+                font-size: 1.25rem;
+            }
+        }
+
+        .header-right{
+            .log-out-btn{
+                font-size: 0.9rem;
+            }
+        }
+    }
+
+    @media (max-width: 480px){
+        .header{
+            padding: 10px 15px;
+
+            .header-left{
+                .business-name{
+                    font-size: 1rem;
+                }
+            }
+
+            .header-right{
+                .log-out-btn{
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+}
