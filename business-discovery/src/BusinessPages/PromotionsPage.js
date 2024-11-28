@@ -13,6 +13,10 @@ const BusinessPromotions = () => {
     });
 
     const [promotionsList, setPromotionsList] = useState([]);
+    //  manages whether the component is currently in edit mode.
+    const [editPromotion, setEditPromotion] = useState(false);
+    //Tracks which index is being edited
+    const [editIndex, setEditIndex] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,13 +27,31 @@ const BusinessPromotions = () => {
     };
 
     const handleSubmit = () => {
-        console.log(promotion);
        if(!promotion.title || !promotion.startDate || !promotion.endDate){
             alert('Please fill in all required fields!');
             return;
         } 
 
-        setPromotionsList( (prevList) => [...prevList, promotion]);
+        //updating the existing promotion
+        if(editPromotion){
+            setPromotionsList( (prevList) => 
+                // Create a new list where the item at 'editIndex' is replaced with the updated 'promotion'.
+                prevList.map((item, index) => 
+                    // Check if the current item's index matches the 'editIndex'.
+                                        //Replace the item with the updated 'promotion'.
+                                        // otherwise, keep the original item.
+                    index === editIndex ? promotion : item
+                )
+            );
+            // Reset the editing state to indicate that editing is complete
+            setEditPromotion(false);
+            // Reset the index tracking which item is being edited.
+            setEditIndex(null);
+        } else {
+            setPromotionsList((prevList) => [...prevList, promotion]);
+        }
+
+        // reset the inputs into default values, which is empty.
         setPromotion({
             title: '',
             description: '',
@@ -39,6 +61,24 @@ const BusinessPromotions = () => {
             discount: '',
         });
     };
+
+    const handleDelete = (index) => {
+        // Update the state of promotionList by filtering out the item at the specified index.
+        //first argument of the filter method is a placeholder, second argument is the index of the current item in the array.
+        //the filter method will create a new array excluding the item at 'index'.
+        //keep the items whose index does not match the specified 'index'.
+        setPromotionsList((prevList) => prevList.filter((_, i) => i !== index));
+    }
+
+    // initiating the process of editing a promotion, when the user clicks the edit button.
+    const handleEdit = (index) => {
+        // retrieve the promotion at the specified index from promotionList
+        setPromotion(promotionsList[index]);
+        // toggles the component into editing editing mode
+        setEditPromotion(true);
+        // targets the promotion that is being ediited
+        setEditIndex(index);
+    }
 
     return(
     <div className="page-layout">
@@ -123,6 +163,8 @@ const BusinessPromotions = () => {
                                             <p>Discount: {promo.discount ? `${promo.discount}%` : "N/A"}</p>
                                             <p>Start Date: {promo.startDate || "N/A"} </p>
                                             <p>End Date: {promo.endDate || "N/A"} </p>
+                                            <button className="btn-edit" onClick={() => handleEdit(index)} >Edit</button>
+                                            <button className="btn-delete" onClick={() => handleDelete(index)}> Delete </button>
                                         </li>
                                     ))
                                 )}
