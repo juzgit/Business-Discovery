@@ -1,5 +1,6 @@
 import React from 'react';
 import '../componentsStyling/JoinSection.scss';
+import { Link } from 'react-router-dom';
 
 const JoinSection = () => {
     return(
@@ -8,8 +9,8 @@ const JoinSection = () => {
             <p className='join-section__description'>Sign up today and start discovering or sharing your local business!</p>
 
             <div className='join-section__buttons'>
-                <a href='#home' className='join-section__link'>Sign Up as User</a>
-                <a href='#home' className='join-section__link'>Sign Up as Business</a>
+                <Link to='/user-register' className='join-section__link'>Sign Up as User</Link>
+                <Link to='/business-register' className='join-section__link'>Sign Up as Business</Link>
             </div>
         </div>
     );

@@ -18,7 +18,7 @@ $neutralColor2: #343A40;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         margin-left: 8rem;
         margin-top: 7rem;
-        max-height: 350px;
+        max-height: 400px;
     }
 
     .business-features{
@@ -91,6 +91,19 @@ $neutralColor2: #343A40;
 
             &:hover{
                 background-color: darken($primaryColor1, 10%);
+            }
+        }
+
+        p{
+            margin-top: 1rem;
+    
+            a{
+                color: $primaryColor1;
+                text-decoration: none;
+    
+                &:hover{
+                    text-decoration: underline;
+                }
             }
         }
     }

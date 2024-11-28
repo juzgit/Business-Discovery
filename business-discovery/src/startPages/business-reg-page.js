@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import '../pagesStyling/business-reg.scss'
+import '../pagesStyling/business-reg.scss';
+import { Link } from "react-router-dom";
 
 const BusinessRegister = () => {
     const [formData, setFormData] = useState({
@@ -153,6 +154,7 @@ const BusinessRegister = () => {
                 </div>
                
                 <button type="submit" className="submit-button">Add Business</button>
+                <p>Do have an account? <Link to="/business-login">Login here</Link></p>
 
             </form>
 

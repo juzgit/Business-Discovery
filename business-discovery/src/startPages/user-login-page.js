@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import '../pagesStyling/user-login-page.scss';
+import { Link } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
 
 const UserLogin = () => {
     const [formData, setFormData] = useState({
@@ -54,7 +56,8 @@ const UserLogin = () => {
 
                 <button type="submit" className="submit-button">Login</button>
 
-                <p>Don't have an account? <a href="#home">Sign-up here</a></p>
+                <p>Don't have an account? <Link to="/user-register">Sign-up here</Link></p>
+                <p><Link to="/"> <FaHome /> Back Home</Link></p>
             </form>
 
         </div>

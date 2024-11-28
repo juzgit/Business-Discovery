@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import '../pagesStyling/user-reg-page.scss';
+import { Link } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
 
 const UserRegister = () =>{
     const [formData, setFormData] = useState({
@@ -150,6 +152,8 @@ const UserRegister = () =>{
                 </div>
 
                 <button type="submit" className="submit-button">Sign-Up</button>
+                <p>Do have an account? <Link to="/user-login">Login here</Link></p>
+                <p><Link to="/"> <FaHome /> Back Home</Link></p>
             </form>
         </div>
     );

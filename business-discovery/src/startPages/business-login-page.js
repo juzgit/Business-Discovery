@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import '../pagesStyling/business-login.scss';
+import { Link } from 'react-router-dom';
 
 const BusinessLogin = () => {
     const [formData, setFormData] = useState({
@@ -62,6 +63,7 @@ const BusinessLogin = () => {
                 </div>
 
                 <button type='submit' className='submit-button'>Login</button>
+                <p>Don't have an account? <Link to="/business-register">Register here</Link></p>
             </form>
         </div>
     )

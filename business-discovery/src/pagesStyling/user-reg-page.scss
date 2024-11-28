@@ -90,6 +90,19 @@ $neutralColor2: #343A40;
                 background-color: darken($primaryColor1, 10%);
             }
         }
+
+        p{
+            margin-top: 1rem;
+    
+            a{
+                color: $primaryColor1;
+                text-decoration: none;
+    
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
     }
 
     @media (max-width: 768px) {
