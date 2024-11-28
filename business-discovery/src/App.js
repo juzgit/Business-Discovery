@@ -12,15 +12,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //import BusinessHeader from "./BusinessPages/BusinessHeader";
 //import BusinessMenuHeader from "./BusinessPages/BusinessMenuHeaderComponent";
 //import BusinessProfile from "./BusinessPages/BusinessProfile";
-//import BusinessPromotions from "./BusinessPages/PromotionsPage";
-import BusinessReviews from "./BusinessPages/ReviewsPage";
+import BusinessPromotions from "./BusinessPages/PromotionsPage";
+//import BusinessReviews from "./BusinessPages/ReviewsPage";
 
 function App() {
   return (
     <div className="App">
         <Router>
             <Routes>
-            <Route path="/" element={<BusinessReviews />} />
+            <Route path="/" element={<BusinessPromotions />} />
             </Routes>
         </Router>
     </div>

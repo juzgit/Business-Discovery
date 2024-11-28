@@ -23,6 +23,7 @@ $neutralColor2: #343A40;
             display: flex;
             flex-direction: column;
             gap: 2rem;
+            padding: 1rem;
             
             .promotionPage{
                 flex: 1;
@@ -50,6 +51,7 @@ $neutralColor2: #343A40;
                         font-size: 1rem;
                         border: 1px solid $primaryColor1;
                         border-radius: 4px;
+                        width: 100%;
                     }
     
                     textarea{
@@ -74,14 +76,11 @@ $neutralColor2: #343A40;
             }
 
             .active-promotions{
-                margin-left: 1rem;
-                margin-top: 1rem;
-                margin-bottom: 1rem;
+                margin: 1rem;
 
                 .active-promotions-heading{
                     font-size: 1.5rem;
                     margin-bottom: 1rem;
-                    margin-left: 2rem;
                 }
 
                 .promotions-list{
@@ -111,5 +110,62 @@ $neutralColor2: #343A40;
             }
             
         }
+    }
+}
+
+@media (max-width: 768px){
+    .main-content{
+        flex-direction: column;
+    }
+
+    .promotionPage-container{
+        .promotionPage{
+            padding: 1rem;
+        }
+
+        .active-promotions{
+            margin: 0;
+            padding: 1rem;
+        }
+    }
+
+    .promotion-form{
+        input,
+        textarea,
+        select{
+            font-size: 0.9rem;
+        }
+
+        .btn-submit{
+            font-size: 0.9rem;
+            padding: 0.5rem 0.8rem;
+        }
+    }
+
+    .promotion-heading{
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px){
+    .header-container{
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+
+    .promotion-form{
+        input,
+        textarea,
+        select{
+            font-size: 0.8rem;
+        }
+
+        .btn-submit{
+            font-size: 0.8rem;
+        }
+    }
+
+    .promotion-heading{
+        font-size: 1.2rem;
     }
 }
