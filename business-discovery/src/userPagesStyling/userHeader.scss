@@ -21,6 +21,16 @@ $neutralColor2: #343A40;
         h1{
             font-size: 24px;
             color: $neutralColor1;
+
+            a{
+                text-decoration: none;
+                color: $neutralColor1;
+                font-weight: bold;
+
+                &:hover{
+                    color: $neutralColor2;
+                }
+            }
         }
     }
 
@@ -37,6 +47,9 @@ $neutralColor2: #343A40;
                 text-decoration: none;
                 color: $neutralColor1;
                 font-size: 18px;
+                padding: 5px 10px;
+                border-radius: 5px;
+                transition: all 0.3s ease;
 
                 &:hover{
                     color:$neutralColor2
@@ -107,18 +120,27 @@ $neutralColor2: #343A40;
             border-radius: 6px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 
-            a{
+            button{
                 display: block;
-                text-decoration: none;
+                width: 100%;
                 text-align: center;
+                padding: 10px;
                 color: $neutralColor1;
+                background: none;
+                border: none;
                 font-size: 16px;
-                padding: 10px 0;
+                cursor: pointer;
+                transition: all 0.3s ease;
 
                 &:hover{
                     color: $primaryColor1;
                     background-color: $neutralColor1;
                     border-radius: 3px;
+                }
+
+                a{
+                    text-decoration: none;
+                    color: inherit;
                 }
             }
         }

@@ -9,6 +9,6 @@ const userSchema = new mongoose.Schema({
 },  { timestamps: true }); //Added time stamp for data creation and when the document was last updated.
 
 
-const User = mongoose.model('Users', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
