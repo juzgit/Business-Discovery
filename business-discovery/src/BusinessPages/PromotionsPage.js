@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import BusinessHeader from "./BusinessHeader";
 import '../businessPageStyling/BusinessPromotions.scss';
+import Footer from "../components/Footer";
 
 const BusinessPromotions = () => {
     const [promotion, setPromotion] = useState({
@@ -175,6 +176,8 @@ const BusinessPromotions = () => {
 
                     
             </div>
+
+            <Footer />
     </div>
     );
 };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../businessPageStyling/BusinessProfilePage.scss';
 import { FaEdit, FaSave } from 'react-icons/fa';
 import BusinessHeader from './BusinessHeader';
+import Footer from '../components/Footer';
 
 const BusinessProfile = () => {
     //mock business data
@@ -130,6 +131,7 @@ const BusinessProfile = () => {
                         </div>
                     </div>
                 </div>
+                <Footer />
             </div>
        
     );

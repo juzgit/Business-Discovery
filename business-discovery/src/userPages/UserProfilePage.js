@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UserNavBar from './UserHeader';
+import Footer from '../components/Footer';
 import { FaDoorOpen, FaEdit, FaSave } from 'react-icons/fa';
 import '../userPagesStyling/UserProfile.scss';
 
@@ -101,6 +102,8 @@ const UserProfile = () => {
 
             <button className='logout-btn'onClick={handleLogout}>Logout <FaDoorOpen/> </button>
         </div>
+
+        <Footer />
     </div>
        
     );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import BusinessHeader from './BusinessHeader';
 import '../businessPageStyling/BusinessReviews.scss';
+import Footer from '../components/Footer';
 
 const BusinessReviews = () => {
 
@@ -54,7 +55,7 @@ const BusinessReviews = () => {
                     </div>
             </div>
 
-
+        <Footer />
         </div>
 
     );

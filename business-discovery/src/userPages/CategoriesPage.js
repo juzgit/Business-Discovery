@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserNavBar from "./UserHeader";
+import Footer from "../components/Footer";
 import { FaSearch } from "react-icons/fa";
 import '../userPagesStyling/CategoriesPage.scss';
 
@@ -21,24 +22,28 @@ const CategoriesPage = () => {
 
 
     return(
-        <div className="categories-page">
+        <div>
+                <div className="categories-page">
 
-            <UserNavBar />
-            
-            <h2 className="category-heading">Explore Categories</h2>
+                        <UserNavBar />
 
-            <div className="categories-list">
-                {categories.map((category) => (
-                    <div key={category.id} className="category-card">
-                    <div className="category-info">
-                        <h3>{category.name}</h3>
-                        <p>{category.description}</p>
-                        <button className="explore-button">View Businesses <FaSearch /> </button>
-                    </div>
-                    </div>
-                ))}
-            </div>
+                        <h2 className="category-heading">Explore Categories</h2>
+
+                        <div className="categories-list">
+                            {categories.map((category) => (
+                                <div key={category.id} className="category-card">
+                                    <div className="category-info">
+                                        <h3>{category.name}</h3>
+                                        <p>{category.description}</p>
+                                        <button className="explore-button">View Businesses <FaSearch /> </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                </div>
+            <Footer />
         </div>
+
     );
 };
 

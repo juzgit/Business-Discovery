@@ -1,6 +1,7 @@
 import React from "react";
 import '../businessPageStyling/BusinessHomePage.scss';
 import BusinessHeader from "./BusinessHeader";
+import Footer from "../components/Footer";
 
 const BusinessUserHP = () => {
 
@@ -59,6 +60,8 @@ const BusinessUserHP = () => {
                     </div>
                 </div>
             </div>
+
+           <Footer />                             
         </div>
     );
 };
