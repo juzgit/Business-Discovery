@@ -44,7 +44,6 @@ function App() {
               {/**Business end pages */}
               <Route path="/business-dashboard" element={<BusinessUserHP />} />
               <Route path="/business-profile" element={<BusinessProfile />} />
-              <Route path="/business-profile" element={<BusinessProfile />} />
               <Route path="/business-promotions" element={<BusinessPromotions />} />
               <Route path="/business-reviews" element={<BusinessReviews />} />
             </Routes>
