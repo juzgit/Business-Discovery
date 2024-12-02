@@ -21,14 +21,16 @@ mongoose.connect(process.env.MONGO_STRING, {
     w: 'majority',
 }).then( () => {
     console.log('MongoDB Connected');
-    
+
 }).catch((err) => {
     console.error('MongoDB Connection Error:', err)
 });
 
 // Routes    
 const userRoutes = require('./routes/userRoutes');
+const businessRoutes = require('./routes/businessUserRoutes');
 app.use('/api/users', userRoutes);
+app.use('/api/business', businessRoutes);
 
 // start the server
 app.listen(PORT, () => {

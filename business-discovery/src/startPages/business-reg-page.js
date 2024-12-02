@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import '../pagesStyling/business-reg.scss';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const BusinessRegister = () => {
     const [formData, setFormData] = useState({
@@ -14,6 +14,8 @@ const BusinessRegister = () => {
     });
 
     const [errors, setErrors] = useState({});
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value });
@@ -31,14 +33,37 @@ const BusinessRegister = () => {
         return newErrors
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         if(Object.keys(validationErrors).length > 0){
             setErrors(validationErrors)
         } else {
             console.log('Form submitted:', formData)
-            // Add the API call here for submission logic
+            
+            try{
+                const response = await fetch ('/api/business/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+
+                    body: JSON.stringify(formData),
+                });
+
+                const data = await response.json();
+
+                if(response.ok){
+                    alert('Business registered successfully!');
+                    console.log('Server response:', data);
+                    navigate('/business-login');
+                } else {
+                    alert(data.message);
+                }
+            }catch (error){
+                console.error(error);
+                alert('Error connecting to server');
+            }
         }
     }
 
@@ -87,13 +112,29 @@ const BusinessRegister = () => {
                                 {errors.email && <p>{errors.email}</p>}
                         </div>
                 </div>
+
+                <div className="form-row">
+                    <div className="form-group">
+                            <label className="label-group">Phone:</label>
+                            <input
+                                type="text"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder="Enter business phone number"
+                                className="form-input"
+                                required
+                                />
+                                {errors.phone && <p>{errors.phone}</p>}
+                    </div>
+                </div>        
                 
 
                 <div className="form-row">
                     <div className="form-group">
                         <label className="label-group">Password:</label>
                         <input
-                            type="text"
+                            type="password"
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
@@ -107,7 +148,7 @@ const BusinessRegister = () => {
                     <div className="form-group">
                         <label className="label-group">Confirm Password:</label>
                         <input
-                            type="text"
+                            type="password"
                             name="confirmPassword"
                             value={formData.confirmPassword}
                             onChange={handleChange}
