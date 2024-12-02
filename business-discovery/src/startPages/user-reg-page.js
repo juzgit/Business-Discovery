@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import '../pagesStyling/user-reg-page.scss';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 
 const UserRegister = () =>{
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
-        emailAdress: '',
+        emailAddress: '',
         username:'',
         password:'',
         confirmPassword:''
     });
+
+    const navigate = useNavigate();
 
     const handleForm = (e) => {
         setFormData({
@@ -21,14 +23,46 @@ const UserRegister = () =>{
     };
 
     /**Check if the passwords when submitting the form */
-    const submitForm = (e) =>{
+    const submitForm = async (e) =>{
         e.preventDefault()
 
         if(formData.password !== formData.confirmPassword){
             alert('Passwords Do Not Match')
-            return
+            return;
         }
-        console.log('Form Submitted:', formData)
+
+        if(!formData.username || formData.username.trim() === ""){
+            alert('Username is required');
+            return;
+        }
+
+        console.log('Submitting form data:', formData);
+
+        try{
+            const response = await fetch('/api/users/register', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            })
+
+            if(!response.ok){
+                const errorData = await response.json();
+                throw new Error(errorData.message)
+            }
+
+            const data = await response.json();
+            if(response.ok){
+                alert(data.message);
+                console.log('Server response:', data);
+                navigate('/user-login');
+            } else {
+                alert(data.message || 'Error registering user');
+            }
+        }catch (err){
+            console.error(err);
+            alert('Error connecting to server');
+        }
     };
 
     /**Display the form */
@@ -97,7 +131,7 @@ const UserRegister = () =>{
                         <input 
                         type="text"
                         name="emailAddress"
-                        value={formData.emailAdress}
+                        value={formData.emailAddress}
                         onChange={handleForm}
                         className="form-input"
                         placeholder="Enter email address"
@@ -110,7 +144,7 @@ const UserRegister = () =>{
                         
                         <input 
                         type="text"
-                        name="userName"
+                        name="username"
                         value={formData.username}
                         onChange={handleForm}
                         className="form-input"

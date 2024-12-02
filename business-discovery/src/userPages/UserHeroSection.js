@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import '../userPagesStyling/HeroSection.scss';
 
 const UserHeroSection = () => {
-    const [userName, setUserName] = useState({
+    const [userName] = useState({
         name: 'John',
         surname: 'Doe',
     })
