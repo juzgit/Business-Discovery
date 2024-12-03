@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import '../pagesStyling/business-reg.scss';
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,6 +13,8 @@ const BusinessRegister = () => {
         businessType: '',
     });
 
+    const [categories, setCategories] = useState([]);
+
     const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
@@ -20,6 +22,23 @@ const BusinessRegister = () => {
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value });
     }
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try{
+                const response = await fetch('/api/categories');
+                if(!response.ok){
+                    throw new Error(`Error: ${response.status}`);
+                }
+                const data = await response.json();
+                setCategories(data);
+            } catch(error){
+                console.error("Error fetching categories:", error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     const validate = () =>{
         const newErrors = {};
@@ -185,10 +204,11 @@ const BusinessRegister = () => {
                             className="form-input-select"
                             required
                             >
-
-                            <option value=''>Select</option>
-                            <option value="Ex1">Gym</option>
-                            <option value="Ex2">Fitness Center</option>
+                            {categories.map((category) => (
+                                <option key={category._id} value={category._id}>
+                                    {category.name}
+                                </option>
+                            ))}
                         </select>
                         {errors.businessType && <p className="error-message">{errors.businessType}</p>}
                     </div>
