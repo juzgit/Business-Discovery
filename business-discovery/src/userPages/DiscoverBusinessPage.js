@@ -7,21 +7,40 @@ import { FaSearch } from 'react-icons/fa';
 const UserDiscoverBusiness = () => {
     const [businesses, setBusinesses] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [filteredBusinesses, setFilteredBusinesses] = useState([]);
 
-    const mockBusinesses = [
+   /* const mockBusinesses = [
         { id: 1, name: 'Cafe Delight', category: 'Cafe', location: 'Downtown' },
         { id: 2, name: 'Tech Store', category: 'Electronics', location: 'Uptown' },
         { id: 3, name: 'Fitness Hub', category: 'Gym', location: 'Suburbs' },
         { id: 4, name: 'Book Nook', category: 'Bookstore', location: 'Uptown' },
-      ];
+      ]; */
 
       useEffect(() => {
-        setBusinesses(
-            mockBusinesses.filter(business => 
-                business.name.toLowerCase().includes(searchQuery.toLowerCase())
+        const fetchBusinesses = async () => {
+            try{
+                const response = await fetch('/api/business/all');
+                const data = await response.json();
+                setBusinesses(data);
+                setFilteredBusinesses(data);
+            } catch(error){
+                console.error('Error fetching businesses:', error);
+            }
+        };
+
+        fetchBusinesses();
+      }, []);
+
+
+
+      useEffect(() => {
+        //Filter businesses based on search query
+        setFilteredBusinesses(
+            businesses.filter((business) => 
+                business.businessName.toLowerCase().includes(searchQuery.toLowerCase())
             )
         );
-      }, [searchQuery]);
+      }, [searchQuery, businesses]);
 
 
     return(
@@ -44,12 +63,12 @@ const UserDiscoverBusiness = () => {
                 </div>
 
                 <div className='business-list'>
-                    {businesses.length > 0 ? (
-                        businesses.map((business) => (
-                            <div key={business.id} className='business-card'>
-                                <h3>{business.name}</h3>
-                                <p>{business.category}</p>
-                                <p>{business.location}</p>
+                    {filteredBusinesses.length > 0 ? (
+                        filteredBusinesses.map((business) => (
+                            <div key={business.name} className='business-card'>
+                                <h3>{business.businessName}</h3>
+                                <p>{business.businessType}</p>
+                                <p>{business.address}</p>
                                 <button>View Details</button>
                             </div>
                         ))
