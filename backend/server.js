@@ -29,8 +29,11 @@ mongoose.connect(process.env.MONGO_STRING, {
 // Routes    
 const userRoutes = require('./routes/userRoutes');
 const businessRoutes = require('./routes/businessUserRoutes');
+
+const categoryRoutes = require("./routes/categories");
 app.use('/api/users', userRoutes);
 app.use('/api/business', businessRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // start the server
 app.listen(PORT, () => {

@@ -6,19 +6,26 @@ import '../userPagesStyling/CategoriesPage.scss';
 
 const CategoriesPage = () => {
     const [categories, setCategories] = useState([]);
+    const [error, setError] = useState(null);
     
     //Add API here
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try{
+                const response = await fetch('/api/categories');
+                if(!response.ok){
+                    throw new Error(`Error: ${response.status}`);
+                }
+                const data = await response.json();
+                setCategories(data);
+            } catch(error){
+                setError(error.message);
+                console.error("Error fetching categories:", error);
+            }
+        };
 
-    const mockCategories = [
-        { id: 1, name: 'Cafes', description: 'Find the best coffee shops around you.'},
-        { id: 2, name: 'Gyms', description: 'Get fit at local gyms and fitness centers.'},
-        { id: 3, name: 'Restaurants', description: 'Explore the top dining spots in town.'},
-        { id: 4, name: 'Bookstores', description: 'Discover your next read at nearby bookstores.'},
-      ];
-
-      useEffect(() => {
-        setCategories(mockCategories);
-      }, []);
+        fetchCategories();
+    }, []);
 
 
     return(
@@ -29,9 +36,12 @@ const CategoriesPage = () => {
 
                         <h2 className="category-heading">Explore Categories</h2>
 
+                        {error ? (
+                            <p className='error-message'>{error}</p>
+                        ) : (
                         <div className="categories-list">
                             {categories.map((category) => (
-                                <div key={category.id} className="category-card">
+                                <div key={category._id} className="category-card">
                                     <div className="category-info">
                                         <h3>{category.name}</h3>
                                         <p>{category.description}</p>
@@ -40,8 +50,9 @@ const CategoriesPage = () => {
                                 </div>
                             ))}
                         </div>
+                        )}
                 </div>
-            <Footer />
+                <Footer />
         </div>
 
     );
