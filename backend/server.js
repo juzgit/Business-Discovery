@@ -31,9 +31,12 @@ const userRoutes = require('./routes/userRoutes');
 const businessRoutes = require('./routes/businessUserRoutes');
 
 const categoryRoutes = require("./routes/categories");
+const promotionRoutes = require('./routes/promotionRoutes');
+
 app.use('/api/users', userRoutes);
 app.use('/api/business', businessRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/promotions', promotionRoutes);
 
 // start the server
 app.listen(PORT, () => {

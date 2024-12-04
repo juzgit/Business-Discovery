@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BusinessHeader from "./BusinessHeader";
 import '../businessPageStyling/BusinessPromotions.scss';
 import Footer from "../components/Footer";
@@ -19,6 +19,32 @@ const BusinessPromotions = () => {
     //Tracks which index is being edited
     const [editIndex, setEditIndex] = useState(null);
 
+    //format the date to yyyy-MM-dd
+    const formatDate = (date) => {
+        if(!date) return ""; //is the date empty or null, return an empty string
+        const d = new Date(date);
+        if (isNaN(d.getTime())) return ""; //is the date valid
+        
+        return d.toISOString().slice(0, 16);
+    };
+
+    //fetching all the promotions
+    useEffect(() => {
+        const fetchPromotions = async () => {
+            try{
+                const response = await fetch('/api/promotions');
+                if(!response.ok) {
+                    throw new Error('Failed to fetch promotions');
+                }
+                const data = await response.json();
+                setPromotionsList(data);
+            } catch(error){
+                console.error("Error fetching promotions:", error);
+            }
+        };
+        fetchPromotions();
+    }, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setPromotion((prevPromotion) => ({
@@ -27,49 +53,79 @@ const BusinessPromotions = () => {
         }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
        if(!promotion.title || !promotion.startDate || !promotion.endDate){
             alert('Please fill in all required fields!');
             return;
         } 
 
-        //updating the existing promotion
-        if(editPromotion){
-            setPromotionsList( (prevList) => 
-                // Create a new list where the item at 'editIndex' is replaced with the updated 'promotion'.
-                prevList.map((item, index) => 
-                    // Check if the current item's index matches the 'editIndex'.
-                                        //Replace the item with the updated 'promotion'.
-                                        // otherwise, keep the original item.
-                    index === editIndex ? promotion : item
-                )
-            );
-            // Reset the editing state to indicate that editing is complete
-            setEditPromotion(false);
-            // Reset the index tracking which item is being edited.
-            setEditIndex(null);
-        } else {
-            setPromotionsList((prevList) => [...prevList, promotion]);
-        }
+        try{
+            if(editPromotion){
+                const response = await fetch(`/api/promotions/${promotionsList[editIndex]._id}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(promotion),
+                    }
+                );
 
-        // reset the inputs into default values, which is empty.
-        setPromotion({
-            title: '',
-            description: '',
-            type: 'Discount',
-            startDate: '',
-            endDate: '',
-            discount: '',
-        });
+                if(!response.ok){
+                    throw new Error("Failed to update the promotion");
+                }
+                const updatedPromotion = await response.json();
+
+                const updatedPromotions = [...promotionsList];
+                updatedPromotions[editIndex] = updatedPromotion;
+                setPromotionsList(updatedPromotions);
+                setEditPromotion(false);
+                setEditIndex(null);
+            } else {
+                const response = await fetch('/api/promotions', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(promotion),
+                });
+                if(!response.ok){
+                    throw new Error("Failed to create the promotion");
+                }
+
+                const newPromotion = await response.json();
+
+                setPromotionsList([...promotionsList, newPromotion]);
+            }
+
+                // reset the inputs into default values, which is empty.
+            setPromotion({
+                title: '',
+                description: '',
+                type: 'Discount',
+                startDate: '',
+                endDate: '',
+                discount: '',
+            });
+        } catch(error){
+            console.error("Error submitting promotion:", error);
+        }
     };
 
-    const handleDelete = (index) => {
-        // Update the state of promotionList by filtering out the item at the specified index.
-        //first argument of the filter method is a placeholder, second argument is the index of the current item in the array.
-        //the filter method will create a new array excluding the item at 'index'.
-        //keep the items whose index does not match the specified 'index'.
-        setPromotionsList((prevList) => prevList.filter((_, i) => i !== index));
-    }
+    const handleDelete = async (id) => {
+        try{
+            const response = await fetch(`/api/promotions/${id}`, {
+                method: "DELETE",
+            });
+            if(!response.ok){
+                throw new Error('Failed to delete the promotion');
+            }
+
+            setPromotionsList(promotionsList.filter((promo) => promo._id !== id));
+        } catch(error){
+            console.error("Error deleting promotion:", error);
+        }
+    };
 
     // initiating the process of editing a promotion, when the user clicks the edit button.
     const handleEdit = (index) => {
@@ -119,17 +175,17 @@ const BusinessPromotions = () => {
                                 </select>
 
                                 <input
-                                type="date"
+                                type="datetime-local"
                                 name="startDate"
-                                value={promotion.startDate}
+                                value={formatDate(promotion.startDate) || ""}
                                 onChange={handleChange} 
                                 placeholder="Start Date"   
                                 />
 
                                 <input
-                                type="date"
+                                type="datetime-local"
                                 name="endDate"
-                                value={promotion.endDate}
+                                value={formatDate(promotion.endDate) || ""}
                                 onChange={handleChange}
                                 placeholder="End Date"
                                 />
@@ -157,15 +213,15 @@ const BusinessPromotions = () => {
                                     <p>No active promotions available.</p>
                                 ) :  (
                                     promotionsList.map((promo, index) => (
-                                        <li key={index} className="promotion-item">
+                                        <li key={promo._id} className="promotion-item">
                                             <h3>{promo.title}</h3>
                                             <p>{promo.description}</p>
                                             <p>Type: {promo.type} </p>
                                             <p>Discount: {promo.discount ? `${promo.discount}%` : "N/A"}</p>
-                                            <p>Start Date: {promo.startDate || "N/A"} </p>
-                                            <p>End Date: {promo.endDate || "N/A"} </p>
+                                            <p>Start Date: {formatDate(promo.startDate) || "N/A"} </p>
+                                            <p>End Date: {formatDate(promo.endDate) || "N/A"} </p>
                                             <button className="btn-edit" onClick={() => handleEdit(index)} >Edit</button>
-                                            <button className="btn-delete" onClick={() => handleDelete(index)}> Delete </button>
+                                            <button className="btn-delete" onClick={() => handleDelete(promo._id)}> Delete </button>
                                         </li>
                                     ))
                                 )}
