@@ -6,9 +6,12 @@ import '../userPagesStyling/CategoriesPage.scss';
 
 const CategoriesPage = () => {
     const [categories, setCategories] = useState([]);
+    const [businesses, setBusinesses] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     
-    //Add API here
+    //fetch all the categories
     useEffect(() => {
         const fetchCategories = async () => {
             try{
@@ -26,6 +29,31 @@ const CategoriesPage = () => {
 
         fetchCategories();
     }, []);
+
+    //fetching all the businesses based on their category
+    const fetchBusinesses = async (categoryId) => {
+        console.log('Category ID:', categoryId);
+        try{
+            console.log('Fetching businesses for category:', categoryId); 
+            const response = await fetch(`/api/business/by-category/${categoryId}`);
+            if(!response.ok){
+                throw new Error(`Error: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log('Business data:', data);
+            setBusinesses(data);
+        } catch(error){
+            setError(error.message);
+            console.error("Error fetching businesses:", error);
+        }finally{
+            setLoading(false);
+        }
+    };
+
+    const handleViewBusinesses = (categoryId) => {
+        setSelectedCategory(categoryId);
+        fetchBusinesses(categoryId);
+    }
 
 
     return(
@@ -45,11 +73,34 @@ const CategoriesPage = () => {
                                     <div className="category-info">
                                         <h3>{category.name}</h3>
                                         <p>{category.description}</p>
-                                        <button className="explore-button">View Businesses <FaSearch /> </button>
+                                        <button className="explore-button" onClick={() => handleViewBusinesses(category._id)}>
+                                            View Businesses <FaSearch /> 
+                                        </button>
                                     </div>
                                 </div>
                             ))}
                         </div>
+                        )}
+
+                        {selectedCategory && (
+                            <div className="businesses-list">
+                                <h3>Business in this category:</h3>
+
+                                
+                                {loading ? (
+                                    <p>Loading businesses...</p>
+                                ): businesses.length > 0 ? (
+                                    <ul>
+                                        {businesses.map((business) => (
+                                            <li key={business._id}>
+                                                <h4>{business.businessName}</h4>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p>No businesses found in this category.</p>
+                                )}
+                            </div>
                         )}
                 </div>
                 <Footer />

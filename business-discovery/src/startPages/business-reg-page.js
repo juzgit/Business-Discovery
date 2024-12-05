@@ -204,8 +204,10 @@ const BusinessRegister = () => {
                             className="form-input-select"
                             required
                             >
+                            
+                            <option value="">select a category</option>
                             {categories.map((category) => (
-                                <option key={category._id} value={category.name}>
+                                <option key={category._id} value={category._id}>
                                     {category.name}
                                 </option>
                             ))}

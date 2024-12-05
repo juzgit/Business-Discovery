@@ -6,7 +6,8 @@ const BusinessSchema = new mongoose.Schema({
     password: { type: String, required: true },
     phone: { type: String },
     address: { type: String },
-    businessType: { type: String, required: true },
+    businessType: { type: String },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
 }, { timestamps: true });
 
 const Business = mongoose.model('Business', BusinessSchema);

@@ -3,6 +3,7 @@ const router = express.Router();
 const Business = require('../models/Business');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 //business register
 router.post('/register', async (req, res) => {
@@ -32,7 +33,7 @@ router.post('/register', async (req, res) => {
             password: hashedPassword,
             phone,
             address,
-            businessType,
+            category: businessType,
         });
 
         await newBusiness.save();
@@ -71,6 +72,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
+//get all businesses
 router.get('/all', async (req, res) => {
     try{
         const businesses = await Business.find();
@@ -78,6 +80,28 @@ router.get('/all', async (req, res) => {
     } catch(error){
         res.status(500).json({ message: 'Server error', error: error.message });
     }
+});
+
+router.get('/by-category/:categoryId', async (req, res) => {
+    const { categoryId } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(categoryId)){
+        return res.status(400).json({ message: 'Invalid category ID' });
+    }
+
+    try{
+        const businesses = await Business.find({ category: categoryId }).exec();
+
+        if(businesses.length === 0){
+            return res.status(404).json({ message: 'No businesses found for this category.' });
+        }
+
+        res.status(200).json(businesses);
+    } catch(error){
+        console.error('Error fetching businesses by category:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+
 });
 
 module.exports = router;
