@@ -8,13 +8,14 @@ const UserDiscoverBusiness = () => {
     const [businesses, setBusinesses] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+    const [reviewForm, setReviewForm] = useState(false);
+    const [chosenBusinessId, setChosenBusinessId] = useState(null);
+    const [review, setReview] = useState({
+        name: '',
+        rating: 0,
+        comment: '',
+    });
 
-   /* const mockBusinesses = [
-        { id: 1, name: 'Cafe Delight', category: 'Cafe', location: 'Downtown' },
-        { id: 2, name: 'Tech Store', category: 'Electronics', location: 'Uptown' },
-        { id: 3, name: 'Fitness Hub', category: 'Gym', location: 'Suburbs' },
-        { id: 4, name: 'Book Nook', category: 'Bookstore', location: 'Uptown' },
-      ]; */
 
       useEffect(() => {
         const fetchBusinesses = async () => {
@@ -42,11 +43,35 @@ const UserDiscoverBusiness = () => {
         );
       }, [searchQuery, businesses]);
 
+      const handleReviewSubmit = async (e) => {
+        e.preventDefault();
+
+        try{
+            const response = await fetch('/api/reviews', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ...review, businessId: chosenBusinessId }),
+            });
+
+            if(response.ok){
+                alert('Review submitted successfully');
+                setReview({ name: '', rating: 0, comment: '' }); // reset it to default
+                setReviewForm(false);
+            } else {
+                alert('Failed to submit review');
+            }
+        } catch(error){
+            console.error('Error submitting review:', error);
+        }
+      };
+
 
     return(
         <div>
             
-                <div className='discover-page'>
+            <div className='discover-page'>
 
                 <UserNavBar />
                 
@@ -69,14 +94,62 @@ const UserDiscoverBusiness = () => {
                                 <h3>{business.businessName}</h3>
                                 <p>{business.businessType}</p>
                                 <p>{business.address}</p>
-                                <button>View Details</button>
+                                <button onClick={() => {
+                                    setReviewForm(true);
+                                    setChosenBusinessId(business._id);
+                                }}>
+                                    Leave a Review
+                                    </button>
                             </div>
                         ))
                     ) : (
                         <p>No businesses found</p>
                     )}
                 </div>
+
+                {reviewForm && (
+                <div className="review-form-layout">
+                    <div className="review-form">
+                        <h3>Leave a Review</h3>
+                        <form onSubmit={handleReviewSubmit}>
+                            <input 
+                            type='text'
+                            placeholder='Your Name'
+                            value={review.name}
+                            onChange={(e) => setReview({ ...review, name: e.target.value })}
+                            required
+                            />
+
+                            <input
+                            type='number'
+                            placeholder='Rating (1-5)'
+                            value={review.rating}
+                            onChange={(e) => setReview({...review, rating: e.target.value })}
+                            min="1"
+                            max="5"
+                            required
+                            />
+
+                            <textarea
+                            placeholder='Your comment'
+                            value={review.comment}
+                            onChange={(e) => setReview({ ...review, comment: e.target.value })
+                            }
+                            required
+                            ></textarea>
+                            <button type='submit'>Submit</button>
+                            
+                            <button
+                            type='button'
+                            onClick={() => setReviewForm(false)}
+                            >Cancel
+                            </button>
+                        </form>
+                    </div> 
+                </div>
+            )}
             </div>
+
         <Footer />
         </div>
     );

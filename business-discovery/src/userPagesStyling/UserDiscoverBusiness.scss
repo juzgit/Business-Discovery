@@ -105,4 +105,65 @@ $neutralColor2: #343A40;
             }
         }
     }
+
+    .review-form-layout{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+
+        .review-form{
+            z-index: 1001;
+            background-color: $neutralColor1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 400px;
+
+            form{
+                display: flex;
+                flex-direction: column;
+
+                input,
+                textarea,
+                button{
+                    margin-bottom: 10px;
+                }
+
+                input,
+                textarea{
+                    padding: 0.8rem;
+                    border: 1px solid $neutralColor2;
+                    border-radius: 5px;
+                    font-size: 1rem;
+
+                    &:focus{
+                        outline: none;
+                        border-color: $primaryColor1;
+                        box-shadow: 0 0 5px $primaryColor1;
+                    }
+                }
+
+                button{
+                    padding: 10px;
+                    background: $primaryColor1;
+                    color: $neutralColor1;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background 0.3s ease;
+
+                    &:hover{
+                        background: darken($primaryColor1, 10%);
+                    }
+                }
+            }
+        }
+    }
 }
