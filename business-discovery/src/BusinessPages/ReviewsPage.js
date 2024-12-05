@@ -1,32 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BusinessHeader from './BusinessHeader';
 import '../businessPageStyling/BusinessReviews.scss';
 import Footer from '../components/Footer';
 
 const BusinessReviews = () => {
 
-    const [reviews] = useState([
-        {
-            id: 1,
-            name: 'John Doe',
-            rating: 5,
-            comment: 'Excellent service! Highly recommend.'
-        },
+    const [reviews, setReviews] = useState([]);
 
-        {
-            id:2,
-            name: 'Jane Smith',
-            rating: 4,
-            comment: 'Great experience, but the wait time was a bit long.'
-        },
+    useEffect(() => {
+        const fetchReviews = async () => {
+            try{
+                const response = await fetch('/api/reviews');
+                if(!response.ok){
+                    throw new Error('Failed to fetch reviews');
+                }
+                const data = await response.json();
+                setReviews(data);
+            } catch(error){
+                console.error('Error fetching reviews:', error);
+            }
+        };
 
-        {
-            id: 3,
-            name: 'Bob Johnson',
-            rating: 3,
-            comment: 'Average service, nothing special.',
-        }
-    ]);
+        fetchReviews();
+    }, []);
     
     return(
         <div className='page-layout'>
@@ -45,7 +41,7 @@ const BusinessReviews = () => {
                         <ul className='reviews-list'>
                             {/**Display reviews here */}
                             {reviews.map((review) => (
-                                <li key={review.id} className='review-item'>
+                                <li key={review._id} className='review-item'>
                                     <h3 className='reviewer-name'>{review.name}</h3>
                                     <p className='review-rating'>Rating: {review.rating}</p>
                                     <p className='review-comment'>"{review.comment}"</p>
