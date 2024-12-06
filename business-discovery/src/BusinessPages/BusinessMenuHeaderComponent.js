@@ -21,7 +21,7 @@ const BusinessMenuHeader = () => {
                 <ul className= 'menu-links'>
                     <li><Link to="/business-dashboard">Dashboard</Link></li>
                     <li><Link to="/business-promotions">Promotions</Link></li>
-                    <li><Link to="/business-reviews">Reviews</Link></li>
+                    <li><Link to='/business-reviews'>Reviews</Link></li>
                     <li><Link to="/business-profile">Business Profile</Link></li>
                 </ul>
                 )}

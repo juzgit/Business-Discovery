@@ -16,8 +16,14 @@ const ReviewSchema = new mongoose.Schema({
     comment:{
         type: String,
         required: true,
-    }
-});
+    },
+
+    businessId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Business',
+        required: true,
+    },
+}, { timestamps: true });
 
 const Review = mongoose.model('Review', ReviewSchema);
 

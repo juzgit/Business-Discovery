@@ -45,12 +45,13 @@ const BusinessLogin = () => {
 
                 if(response.ok){
                     localStorage.setItem('businessToken', data.token);
+                    localStorage.setItem('businessId', data.businessId);
                     alert('You gave logged in');
                     console.log('Server response:', data);
                     navigate('/business-dashboard')
                 } else if (response.status === 401){
                     alert('Invalid credentials. Please try again');
-                }else if (response.staus === 500){
+                }else if (response.status === 500){
                     alert('Internal Server Error');
                 }
             } catch(error){
