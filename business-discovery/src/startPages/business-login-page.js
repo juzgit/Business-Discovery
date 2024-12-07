@@ -46,6 +46,7 @@ const BusinessLogin = () => {
                 if(response.ok){
                     localStorage.setItem('businessToken', data.token);
                     localStorage.setItem('businessId', data.businessId);
+                    console.log('Stored token:', localStorage.getItem('businessToken'));
                     alert('You gave logged in');
                     console.log('Server response:', data);
                     navigate('/business-dashboard')

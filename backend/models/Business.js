@@ -8,6 +8,9 @@ const BusinessSchema = new mongoose.Schema({
     address: { type: String },
     businessType: { type: String },
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+    description: { type: String },
+    hours: { type: String },
+    businessWebsite: { type: String },
 }, { timestamps: true });
 
 const Business = mongoose.model('Business', BusinessSchema);

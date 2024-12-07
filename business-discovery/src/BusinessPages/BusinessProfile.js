@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../businessPageStyling/BusinessProfilePage.scss';
 import { FaEdit, FaSave } from 'react-icons/fa';
 import BusinessHeader from './BusinessHeader';
@@ -7,14 +7,41 @@ import Footer from '../components/Footer';
 const BusinessProfile = () => {
     //mock business data
     const [businessData, setBusinessData] = useState({
-        name: "Joe Doe's Wings",
-        description: 'Get the best wings.',
-        address: '123 Long Street, Townville',
-        phone: '021 123 4567',
-        email: 'johndoe@example.com',
-        hours: 'Mon-Fri: 7am - 8pm, Sat-Sun: 8am - 6pm',
-        businessWebsite: "joedoeswings.com",
+        description: '',
+        address: '',
+        phone: '',
+        email: '',
+        hours: '',
+        businessWebsite: '',
     });
+
+    const fetchBusinessProfile = async () => {
+        const token = localStorage.getItem('businessToken');
+        console.log('businessToken:', token);
+
+        try{
+            const response = await fetch('/api/business/profile', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            if(!response.ok){
+                throw new Error('Failed to fetch profile details.')
+            }
+
+            const data = await response.json();
+            setBusinessData(data);
+            console.log('Business Profile:', data);
+        } catch (error){
+            console.error('Error fetching profile:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchBusinessProfile();
+    }, []);
 
     const [isEditing, setIsEditing] = useState(false);
     const [updatedData, setUpdatedData] = useState(businessData);
@@ -27,10 +54,33 @@ const BusinessProfile = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    //update the business details
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setBusinessData(updatedData);
-        setIsEditing(false);
+        const token = localStorage.getItem('businessToken');
+        console.log('Token:', token);
+        try{
+            const response = await fetch('/api/business/update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(updatedData),
+            });
+
+            if(!response.ok){
+                throw new Error('Failed to update profile');
+            }
+
+            const data = await response.json();
+            setBusinessData(data); //update state with new data
+            setIsEditing(false); // Exit edit mode after saving
+            alert('Profile updated successfully!');
+        } catch(error){
+            console.error('Error updating profile:', error);
+            alert('There was an error updating the profile');
+        }
     };
 
     return (
@@ -48,16 +98,6 @@ const BusinessProfile = () => {
                             <div className='profile-info'>
                                 {isEditing ? (
                                     <form onSubmit={handleSubmit} className='profile-form'>
-                                        <div className='form-group'>
-                                            <label className='label-group'>Name:</label>
-                                            <input
-                                            type='text'
-                                            name='name'
-                                            value={updatedData.name}
-                                            onChange={handleChange}
-                                            className='input-group'
-                                            />
-                                        </div>
 
                                         <div className='form-group'>
                                             <label className='label-group'>Description:</label>
@@ -106,7 +146,7 @@ const BusinessProfile = () => {
                                             <label className='label-group'>Website:</label>
                                             <input
                                             type='text'
-                                            name='website'
+                                            name='businessWebsite'
                                             value={updatedData.businessWebsite}
                                             onChange={handleChange}
                                             className='input-group'
@@ -116,7 +156,7 @@ const BusinessProfile = () => {
                                     </form>
                                 ): (
                                     <>
-                                    <h2>Name: {businessData.name}</h2>
+                                    <h2>Name: {businessData.businessName}</h2>
                                     <p>Description: {businessData.description}</p>
                                     <p>Phone: {businessData.phone}</p>
                                     <p>Email: {businessData.email}</p>
