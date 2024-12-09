@@ -19,8 +19,8 @@ const CategoriesPage = () => {
                 if(!response.ok){
                     throw new Error(`Error: ${response.status}`);
                 }
-                const data = await response.json();
-                setCategories(data);
+                const categoriesData = await response.json();
+                setCategories(categoriesData);
             } catch(error){
                 setError(error.message);
                 console.error("Error fetching categories:", error);
@@ -33,20 +33,26 @@ const CategoriesPage = () => {
     //fetching all the businesses based on their category
     const fetchBusinesses = async (categoryId) => {
         console.log('Category ID:', categoryId);
+        setLoading(true); //start loading
         try{
             console.log('Fetching businesses for category:', categoryId); 
             const response = await fetch(`/api/business/by-category/${categoryId}`);
+            const businessData = await response.json();
             if(!response.ok){
+                if(businessData.length === 0){
+                    setError('No businesses found for this category');
+                } else {
+                    setError(`Error: ${response.status}`);
+                }
                 throw new Error(`Error: ${response.status}`);
             }
-            const data = await response.json();
-            console.log('Business data:', data);
-            setBusinesses(data);
+            console.log('Business data:', businessData);
+            setBusinesses(businessData);
         } catch(error){
             setError(error.message);
             console.error("Error fetching businesses:", error);
         }finally{
-            setLoading(false);
+            setLoading(false); //end loading
         }
     };
 

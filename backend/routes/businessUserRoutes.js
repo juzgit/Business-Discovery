@@ -120,7 +120,7 @@ router.get('/by-category/:categoryId', async (req, res) => {
         const businesses = await Business.find({ category: categoryId }).exec();
 
         if(businesses.length === 0){
-            return res.status(404).json({ message: 'No businesses found for this category.' });
+            return res.status(200).json([]);
         }
 
         res.status(200).json(businesses);
