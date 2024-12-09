@@ -10,6 +10,7 @@ Modal.setAppElement('#root');
 const CategoriesPage = () => {
     const [categories, setCategories] = useState([]);
     const [businesses, setBusinesses] = useState([]);
+    const [selectedBusiness, setSelectedBusiness] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -69,12 +70,16 @@ const CategoriesPage = () => {
     const closeModal = () => {
         setIsModalOpen(false);
         setBusinesses([]);
+        setSelectedBusiness(null);
     }
 
-    useEffect(() => {
-        console.log('Selected Category:', selectedCategory);
-    }, [selectedCategory]);
+    const viewDetails = (business) => {
+        setSelectedBusiness(business);
+    };
 
+    const backToList = () => {
+        setSelectedBusiness(null);
+    };
 
 
     return(
@@ -110,28 +115,44 @@ const CategoriesPage = () => {
                             overlayClassName="modal-overlay"
                             closeTimeoutMS={200}
                             >
-                                <div className="businesses-list">
-                                    <h3>Businesses in {selectedCategory ? selectedCategory.name : ''}:</h3>
 
-                                    
-                                    {loading ? (
-                                        <p>Loading businesses...</p>
-                                    ): businesses.length > 0 ? (
-                                        <ul>
-                                            {businesses.map((business) => (
-                                                <li key={business._id}>
-                                                    <h4>{business.businessName}</h4>
-                                                    {/**Add a button here 'view details' */}
-                                                    <button className="details-btn">View Details</button>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    ) : (
-                                        <p>No businesses found in this category.</p>
-                                    )}
-                                    {/**Add a close modal button here */}
-                                    <button className="close-modal" onClick={closeModal}>Close</button>
+                                {selectedBusiness ? (
+                                    <div className="business-details">
+                                        <h3>Details for {selectedBusiness.businessName}</h3>
+                                        <p><strong>Description:</strong> {selectedBusiness.description} </p>
+                                        <p><strong>Address:</strong> {selectedBusiness.address} </p>
+                                        <p><strong>Phone:</strong> {selectedBusiness.phone} </p>
+                                        <p><strong>Website:</strong> {selectedBusiness.businessWebsite} </p>
+                                        <p><strong>Hours:</strong> {selectedBusiness.hours} </p>
+                                        <button onClick={backToList} className='back-button'>
+                                            Back to Businesses
+                                        </button>
+                                    </div>
+                                ): (
+                                    <div className="businesses-list">
+                                        <h3>Businesses in {selectedCategory ? selectedCategory.name : ''}:</h3>
+
+                                        
+                                        {loading ? (
+                                            <p>Loading businesses...</p>
+                                        ): businesses.length > 0 ? (
+                                            <ul>
+                                                {businesses.map((business) => (
+                                                    <li key={business._id}>
+                                                        <h4>{business.businessName}</h4>
+                                                        {/**Add a button here 'view details' */}
+                                                        <button className="details-btn" onClick={() => viewDetails(business)}>
+                                                            View Details
+                                                        </button>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p>No businesses found in this category.</p>
+                                        )}
                                 </div>
+                                )}
+                                <button className="close-modal" onClick={closeModal}>Close</button>
                         </Modal>
                 </div>
                 <Footer />

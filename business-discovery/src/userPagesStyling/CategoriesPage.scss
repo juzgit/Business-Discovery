@@ -119,6 +119,9 @@ $neutralColor2: #343A40;
         margin-bottom: 15px;
         font-size: 1rem;
         color: $neutralColor2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
         //add button here
         button {
@@ -136,6 +139,31 @@ $neutralColor2: #343A40;
         }
     }
 
+    .business-details{
+        p{
+            margin: 10px 0;
+            color: $neutralColor2;
+
+            strong{
+                font-weight: bold;
+            }
+        }
+
+        .back-button{
+            background-color: $neutralColor2;
+            color: $primaryColor1;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            margin-top: 10px;
+
+            &:hover{
+                background-color: lighten($neutralColor2, 10%);
+            }
+        }
+    }
+
     .close-modal{
         position: absolute;
         top: 10px;
@@ -149,7 +177,4 @@ $neutralColor2: #343A40;
         font-size: 1.2rem;
     }
 }
-
-
-//Button styles
 
