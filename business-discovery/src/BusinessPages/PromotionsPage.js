@@ -32,11 +32,26 @@ const BusinessPromotions = () => {
     useEffect(() => {
         const fetchPromotions = async () => {
             try{
-                const response = await fetch('/api/promotions');
+
+                const token = localStorage.getItem('businessToken');
+                console.log('Token received?', token);
+
+                if(!token){
+                    throw new Error('No token found. Please log in again.');
+                }
+                console.log('Fetching promotions...');
+                const response = await fetch('/api/promotions', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                console.log('API Response:', response);
                 if(!response.ok) {
                     throw new Error('Failed to fetch promotions');
                 }
                 const data = await response.json();
+                console.log('Promotion Data:', data);
                 setPromotionsList(data);
             } catch(error){
                 console.error("Error fetching promotions:", error);
@@ -44,6 +59,7 @@ const BusinessPromotions = () => {
         };
         fetchPromotions();
     }, []);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -60,12 +76,17 @@ const BusinessPromotions = () => {
         } 
 
         try{
+            const token = localStorage.getItem('businessToken');
+            if(!token){
+                throw new Error('No token found. Please log in again.');
+            }
             if(editPromotion){
                 const response = await fetch(`/api/promotions/${promotionsList[editIndex]._id}`,
                     {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json",
+                            'Authorization': `Bearer ${token}`,
                         },
                         body: JSON.stringify(promotion),
                     }
@@ -86,6 +107,7 @@ const BusinessPromotions = () => {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        'Authorization': `Bearer ${token}`,
                     },
                     body: JSON.stringify(promotion),
                 });
@@ -114,8 +136,15 @@ const BusinessPromotions = () => {
 
     const handleDelete = async (id) => {
         try{
+            const token = localStorage.getItem('businessToken');
+            if(!token){
+                throw new Error('No token found. Please log in again.');
+            }
             const response = await fetch(`/api/promotions/${id}`, {
                 method: "DELETE",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
             });
             if(!response.ok){
                 throw new Error('Failed to delete the promotion');

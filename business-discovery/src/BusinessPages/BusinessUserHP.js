@@ -1,17 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import '../businessPageStyling/BusinessHomePage.scss';
 import BusinessHeader from "./BusinessHeader";
 import Footer from "../components/Footer";
 
 const BusinessUserHP = () => {
 
-    const mockAverageRating = 4.3;
-    const mockPromotions = ["50% off Membership", "Buy 1 Get 1 Free", "Holiday Special Discounts"];
-    const mockReviews = [
-        { user: "Alice", review: "Great service and friendly staff!", rating: 5 },
-        { user: "Bob", review: "Clean environment, but can improve on wait times.", rating: 4 },
-        { user: "Cathy", review: "Affordable and well-maintained facilities.", rating: 4.5 },
-    ]
+    const [promotions, setPromotions] = useState([]);
+    const [reviews, setReviews] = useState([]);
+    const [averageRating, setAverageRating] = useState(0);
+
+    useEffect(() => {
+        const fetchPromotions = async () => {
+            try{
+                const token = localStorage.getItem('businessToken');
+                const response = await fetch('/api/promotions', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                const promotionsData = await response.json();
+                setPromotions(promotionsData);
+            } catch(error){
+                console.error('Error fetching promotions:', error);
+            }
+        };
+
+        const fetchReviews = async () => {
+            try{
+                const token = localStorage.getItem('businessToken');
+                const response = await fetch('/api/reviews', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                const reviewData = await response.json();
+                setReviews(reviewData);
+
+                //calculating average rating
+                const totalRatings = reviewData.reduce((sum, review) => sum + review.rating, 0);
+                const average = (totalRatings / reviewData.length).toFixed(1);
+                setAverageRating(average);
+            } catch(error){
+                console.error('Error fetching reviews:', error);
+            }
+        };
+
+        fetchPromotions();
+        fetchReviews();
+    }, []);
+
 
     return(
         <div className="business-home">
@@ -34,27 +73,41 @@ const BusinessUserHP = () => {
                                 <h3 className="promotions-heading">Active Promotions</h3>
                                 {/**Display active promotions here */}
                                 <ul>
-                                    {mockPromotions.map((promotion, index) => (
-                                        <li key={index}>{promotion}</li>
-                                    ))}
+                                    {promotions.length > 0 ? (
+                                    promotions.map((promotion) => (
+                                        <li key={promotion._id || promotion.title}>
+                                          <h4>{promotion.title}</h4>
+                                          <p>{promotion.description}</p>
+                                          <p> Type: {promotion.type}</p>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <p>No promotions available</p>
+                                )}
                                 </ul>
+                                <button className="button-group"><Link to='/business-promotions'>View All Promotions</Link></button>
                             </div>
 
                             <div className="metric">
                                 <h3 className="rating-heading">Average Rating</h3>
-                                <p>{mockAverageRating} / 5</p>
+                                <p>{averageRating || "N/A"} / 5</p>
                             </div>
 
                             <div className="metric">
                                 <h3 className="recent-rev-heading">Recent Reviews</h3>
                                 <ul>
-                                    {mockReviews.map((review, index) => (
-                                        <li key={index}>
-                                            <strong>{review.user}:</strong> {review.review} <em>({review.rating} / 5 )</em>
-                                        </li>
-                                    ))}
+                                    {reviews.length > 0 ? (
+                                        reviews.map((review) => (
+                                            <li key={review._id}>
+                                                <strong>{review.name}:</strong> {review.comment}
+                                                <em>({review.rating} / 5)</em>
+                                            </li>
+                                        ))
+                                    ): (
+                                        <p>No reviews available</p>
+                                    )}
                                 </ul>
-                                <button className="reviews-button">View All Reviews</button>
+                                <button className="button-group"><Link to='/business-reviews'>View All Reviews</Link></button>
                             </div>
                         </div>
                     </div>

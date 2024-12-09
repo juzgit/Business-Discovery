@@ -85,7 +85,7 @@ $neutralColor2: #343A40;
               margin-top: 10px;
             }
 
-            .reviews-button {
+            .button-group {
               margin-top: 15px;
               padding: 10px 15px;
               background-color: darken($primaryColor1, 10%);
@@ -94,6 +94,11 @@ $neutralColor2: #343A40;
               border-radius: 5px;
               cursor: pointer;
               font-size: 0.9rem;
+
+              a{
+                text-decoration: none;
+                color: $neutralColor1;
+              }
 
               &:hover {
                 background-color: lighten($primaryColor1, 5%);
