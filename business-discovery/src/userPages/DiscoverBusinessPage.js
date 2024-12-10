@@ -10,6 +10,7 @@ const UserDiscoverBusiness = () => {
     const [filteredBusinesses, setFilteredBusinesses] = useState([]);
     const [reviewForm, setReviewForm] = useState(false);
     const [chosenBusinessId, setChosenBusinessId] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [review, setReview] = useState({
         name: '',
         rating: 0,
@@ -45,6 +46,7 @@ const UserDiscoverBusiness = () => {
 
       const handleReviewSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         try{
             const response = await fetch('/api/reviews', {
@@ -64,6 +66,9 @@ const UserDiscoverBusiness = () => {
             }
         } catch(error){
             console.error('Error submitting review:', error);
+            alert('An error occurred. Please try again.')
+        } finally{
+            setIsSubmitting(false);
         }
       };
 
@@ -137,7 +142,7 @@ const UserDiscoverBusiness = () => {
                             }
                             required
                             ></textarea>
-                            <button type='submit'>Submit</button>
+                            <button type='submit' disabled={isSubmitting}>{isSubmitting ? 'Submitting...': 'Submit'}</button>
                             
                             <button
                             type='button'
