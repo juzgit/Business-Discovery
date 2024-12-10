@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     emailAddress: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true},
     password: { type: String, required: true },
+    bio: { type: String, required: true }
 },  { timestamps: true }); //Added time stamp for data creation and when the document was last updated.
 
 
