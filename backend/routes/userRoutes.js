@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Review = require('../models/Reviews');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -137,6 +138,23 @@ router.put('/update', userAuthenticate, async (req, res) => {
     } catch(error){
         console.error('Error updating user profile:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+//Get the user metrics
+router.get('/metrics', userAuthenticate, async (req, res) => {
+    const userId = req.userId;
+
+    try{
+        const reviews = await Review.find({ userId }); //get the reviews that were submitted by the user
+        const totalReviews = reviews.length; //get the total reviews.
+
+        res.json({
+            totalReviews
+        })
+    } catch (error){
+        console.error('Error fetching user metrics:', error);
+        res.status(500).json({ error: 'Server error' });
     }
 });
 
