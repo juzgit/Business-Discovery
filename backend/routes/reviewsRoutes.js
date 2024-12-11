@@ -27,7 +27,30 @@ const authenticateUser = async (req, res, next) => {
     } catch(error){
         return res.status(401).json({ error: 'Invalid or expired token' });
     }
-}
+};
+
+//link the profile to the user.
+const userAuthenticate = (req, res, next) => {
+    const token = req.headers['authorization']?.split(' ')[1];
+
+    if(!token){
+        return res.status(401).json({ message: 'Access token is missing or invalid' });
+    }
+
+    try{
+
+     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+     req.userId = decoded.userId;
+
+     next();
+
+    } catch(error){
+        console.error('Token verification error:', error.message);
+        return res.status(401).json({ error: 'Invalid or expired soon' });
+    }
+
+};
 
 //get all reviews
 router.get('/', authenticateUser, async (req, res) => {
@@ -47,8 +70,11 @@ router.get('/', authenticateUser, async (req, res) => {
 });
 
 //post reviews
-router.post('/', async (req, res) => {
+router.post('/', userAuthenticate, async (req, res) => {
     const { name, rating, comment, businessId } = req.body;
+    
+    //extract from user middleware.
+    const userId = req.userId;
 
     if(!name || !rating || !comment || !businessId){
         return res.status(400).json({ error: 'All fields are required' })
@@ -64,6 +90,7 @@ router.post('/', async (req, res) => {
             rating,
             comment,
             businessId,
+            userId,
         });
 
         const review = await newReview.save();
@@ -73,5 +100,20 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
+
+//get reviews by user
+router.get('/my-reviews', userAuthenticate, async (req, res) => {
+    
+    const userId = req.userId;
+
+    try{
+        const reviews = await Review.find({ userId }).populate('businessId', 'businessName');
+        res.json(reviews);
+    } catch(error){
+        console.error('Error fetching the user reviews:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+
+})
 
 module.exports = router;

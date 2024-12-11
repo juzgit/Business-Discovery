@@ -17,6 +17,8 @@ const UserDiscoverBusiness = () => {
         comment: '',
     });
 
+    const [error, setError] = useState('');
+
 
       useEffect(() => {
         const fetchBusinesses = async () => {
@@ -27,6 +29,7 @@ const UserDiscoverBusiness = () => {
                 setFilteredBusinesses(data);
             } catch(error){
                 console.error('Error fetching businesses:', error);
+                setError('Failed to load businesses. Please try again later.');
             }
         };
 
@@ -47,12 +50,22 @@ const UserDiscoverBusiness = () => {
       const handleReviewSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setError('');
+
+        const token = localStorage.getItem('userToken');
+
+        if(!token){
+            setError('You must be logged in to submit a review.');
+            setIsSubmitting(false);
+            return;
+        }
 
         try{
             const response = await fetch('/api/reviews', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({ ...review, businessId: chosenBusinessId }),
             });
@@ -62,11 +75,12 @@ const UserDiscoverBusiness = () => {
                 setReview({ name: '', rating: 0, comment: '' }); // reset it to default
                 setReviewForm(false);
             } else {
-                alert('Failed to submit review');
+                const errorData = await response.json();
+                setError(errorData.message || 'Failed to submit the review.');
             }
         } catch(error){
             console.error('Error submitting review:', error);
-            alert('An error occurred. Please try again.')
+            setError('An error occurred. Please try again.');
         } finally{
             setIsSubmitting(false);
         }
@@ -95,7 +109,7 @@ const UserDiscoverBusiness = () => {
                 <div className='business-list'>
                     {filteredBusinesses.length > 0 ? (
                         filteredBusinesses.map((business) => (
-                            <div key={business.name} className='business-card'>
+                            <div key={business._id} className='business-card'>
                                 <h3>{business.businessName}</h3>
                                 <p>{business.businessType}</p>
                                 <p>{business.address}</p>
@@ -116,6 +130,7 @@ const UserDiscoverBusiness = () => {
                 <div className="review-form-layout">
                     <div className="review-form">
                         <h3>Leave a Review</h3>
+                        {error && <p>{error}</p>}
                         <form onSubmit={handleReviewSubmit}>
                             <input 
                             type='text'

@@ -4,6 +4,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+//link the profile to the user.
 const userAuthenticate = (req, res, next) => {
     const token = req.headers['authorization']?.split(' ')[1];
 
@@ -97,6 +98,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
+//get the user profile info.
 router.get('/profile', userAuthenticate, async (req, res) => {
     try{
         const user = await User.findById(req.userId);
@@ -112,6 +114,7 @@ router.get('/profile', userAuthenticate, async (req, res) => {
     }
 });
 
+//update the user profile info
 router.put('/update', userAuthenticate, async (req, res) => {
     try{
         const user = await User.findById(req.userId);
@@ -120,10 +123,11 @@ router.put('/update', userAuthenticate, async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const { name, userName, emailAddress, bio } = req.body;
+        const { firstName, lastName ,username, emailAddress, bio } = req.body;
 
-        user.name = name || user.name;
-        user.userName = userName || user.userName;
+        user.firstName = firstName || user.firstName;
+        user.lastName = lastName || user.lastName;
+        user.username = username || user.username;
         user.emailAddress = emailAddress || user.emailAddress;
         user.bio = bio || user.bio;
 

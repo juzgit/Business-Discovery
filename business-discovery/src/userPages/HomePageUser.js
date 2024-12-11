@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import '../userPagesStyling/HomePage.scss';
 import UserNavBar from "./UserHeader";
 import UserHeroSection from "./UserHeroSection";
@@ -9,7 +9,8 @@ const UserHomePage = () => {
         totalReviews: 12,
         favouriteBusinesses: 5,
         promotionsViewed: 3,
-    }
+    };
+    
     return(
         <div className="userHomePage">
             <UserNavBar />

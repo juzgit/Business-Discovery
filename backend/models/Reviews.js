@@ -24,6 +24,13 @@ const ReviewSchema = new mongoose.Schema({
         ref: 'Business',
         required: true,
     },
+
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+
 }, { timestamps: true });
 
 const Review = mongoose.model('Review', ReviewSchema);
