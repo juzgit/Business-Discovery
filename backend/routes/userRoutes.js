@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Business = require('../models/Business');
 const Review = require('../models/Reviews');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -155,6 +156,59 @@ router.get('/metrics', userAuthenticate, async (req, res) => {
     } catch (error){
         console.error('Error fetching user metrics:', error);
         res.status(500).json({ error: 'Server error' });
+    }
+});
+
+//save favourite business
+router.post('/favourites/:businessId', userAuthenticate, async (req, res) => {
+    const userId = req.userId;
+    const { businessId } = req.params;
+
+    try{
+        const business = await Business.findById(businessId);
+        if(!business){
+            return res.status(404).json({ message: 'Business not found' });
+        }
+
+        const user = await User.findById(userId);
+        if(!user.favouriteBusinesses.includes(businessId)){
+            user.favouriteBusinesses.push(businessId);
+            await user.save();
+        }
+
+        res.status(200).json({ message: 'Business added to favourites', favouriteBusinesses: user.favouriteBusinesses });
+    } catch(error){
+        console.error('Error adding to favourites:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+//delete favourite business
+router.delete('/favourites/:businessId', userAuthenticate, async (req, res) => {
+    const userId = req.userId;
+    const { businessId } = req.params;
+
+    try{
+        const user = await User.findById(userId);
+        if(user.favouriteBusinesses.includes(businessId)){
+            user.favouriteBusinesses = user.favouriteBusinesses.filter(id => id !== businessId);
+            await user.save();
+        }
+        res.status(200).json({ message: 'Business removed from favourites' });
+    } catch(error){
+        console.error('Error removing from favourites:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+//get all favourite businesses.
+router.get('/favourites', userAuthenticate, async(req, res) => {
+    try{
+        const user = await User.findById(req.userId).populate('favouriteBusinesses');
+        res.status(200).json({ favouriteBusiness: user.favouriteBusinesses });
+    } catch(error){
+        console.error('Error fetching favourites:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
 

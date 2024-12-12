@@ -98,6 +98,7 @@ $neutralColor2: #343A40;
                 padding: 0.5rem 1rem;
                 border-radius: 4px;
                 cursor: pointer;
+                margin: 8px;
 
                 &:hover{
                     background: darken($primaryColor1, 10%);

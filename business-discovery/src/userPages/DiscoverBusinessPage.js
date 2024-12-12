@@ -18,8 +18,10 @@ const UserDiscoverBusiness = () => {
     });
 
     const [error, setError] = useState('');
+    const [userFavourites, setUserFavourites] = useState([]);
 
 
+    //fetch all the business to display them in the discover page
       useEffect(() => {
         const fetchBusinesses = async () => {
             try{
@@ -27,6 +29,17 @@ const UserDiscoverBusiness = () => {
                 const data = await response.json();
                 setBusinesses(data);
                 setFilteredBusinesses(data);
+
+                const token = localStorage.getItem('userToken');
+                const userResponse = await fetch('/api/users/favourites', {
+                    headers: {
+                        Authorization : `Bearer ${token}`,
+                    }
+                });
+
+                const userData = await userResponse.json();
+                setUserFavourites(userData.favouriteBusiness || []);
+
             } catch(error){
                 console.error('Error fetching businesses:', error);
                 setError('Failed to load businesses. Please try again later.');
@@ -38,6 +51,7 @@ const UserDiscoverBusiness = () => {
 
 
 
+      //search query
       useEffect(() => {
         //Filter businesses based on search query
         setFilteredBusinesses(
@@ -47,19 +61,23 @@ const UserDiscoverBusiness = () => {
         );
       }, [searchQuery, businesses]);
 
+      //submitting reviews
       const handleReviewSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         setError('');
 
+        //get the user token
         const token = localStorage.getItem('userToken');
 
+        //if there is no token, alert the user.
         if(!token){
             setError('You must be logged in to submit a review.');
             setIsSubmitting(false);
             return;
         }
 
+        //posting reviews
         try{
             const response = await fetch('/api/reviews', {
                 method: 'POST',
@@ -82,10 +100,44 @@ const UserDiscoverBusiness = () => {
             console.error('Error submitting review:', error);
             setError('An error occurred. Please try again.');
         } finally{
+            //set the loading to false once it has been submitted.
             setIsSubmitting(false);
         }
       };
 
+      //favourite or unfavourite business
+      const FavouriteToggle = async (businessId, isFavourited) => {
+        const token = localStorage.getItem('userToken');
+        if(!token){
+            alert('You must be logged in to favourite a business.');
+            return;
+        }
+
+        //checking if a business has been favourited by the user
+        //if true, the method will be set to delete
+        //if false the method will be set to post
+        const method = isFavourited ? 'DELETE' : 'POST';
+
+        try{
+            const response = await fetch(`/api/users/favourites/${businessId}`, {
+                method,
+                headers:{
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            if(response.ok){
+                const updatedFavourites = isFavourited ? userFavourites.filter(id => id !== businessId) : [...userFavourites, businessId];
+                setUserFavourites(updatedFavourites);
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message ||'Failed to update favourite status.');
+            }
+        } catch(error){
+            console.error('Error updating favourite status:', error);
+            alert('An error occurred. Please try again.');
+        }
+      };
 
     return(
         <div>
@@ -108,7 +160,9 @@ const UserDiscoverBusiness = () => {
 
                 <div className='business-list'>
                     {filteredBusinesses.length > 0 ? (
-                        filteredBusinesses.map((business) => (
+                        filteredBusinesses.map((business) => {
+                            const isFavourited = userFavourites.includes(business._id);
+                            return(
                             <div key={business._id} className='business-card'>
                                 <h3>{business.businessName}</h3>
                                 <p>{business.businessType}</p>
@@ -119,8 +173,13 @@ const UserDiscoverBusiness = () => {
                                 }}>
                                     Leave a Review
                                     </button>
+
+                                    <button onClick={() => FavouriteToggle(business._id, isFavourited)}>
+                                        {isFavourited ? 'Unfavourite' : 'Favourite'}
+                                    </button>
                             </div>
-                        ))
+                        );
+                    })
                     ) : (
                         <p>No businesses found</p>
                     )}
