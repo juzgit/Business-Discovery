@@ -142,23 +142,6 @@ router.put('/update', userAuthenticate, async (req, res) => {
     }
 });
 
-//Get the user metrics
-router.get('/metrics', userAuthenticate, async (req, res) => {
-    const userId = req.userId;
-
-    try{
-        const reviews = await Review.find({ userId }); //get the reviews that were submitted by the user
-        const totalReviews = reviews.length; //get the total reviews.
-
-        res.json({
-            totalReviews
-        })
-    } catch (error){
-        console.error('Error fetching user metrics:', error);
-        res.status(500).json({ error: 'Server error' });
-    }
-});
-
 //save favourite business
 router.post('/favourites/:businessId', userAuthenticate, async (req, res) => {
     const userId = req.userId;
@@ -204,11 +187,33 @@ router.delete('/favourites/:businessId', userAuthenticate, async (req, res) => {
 //get all favourite businesses.
 router.get('/favourites', userAuthenticate, async(req, res) => {
     try{
-        const user = await User.findById(req.userId).populate('favouriteBusinesses');
+        const user = await User.findById(req.userId).populate('favouriteBusinesses', 'businessName');
         res.status(200).json({ favouriteBusiness: user.favouriteBusinesses });
     } catch(error){
         console.error('Error fetching favourites:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+//Get the user metrics
+router.get('/metrics', userAuthenticate, async (req, res) => {
+    const userId = req.userId;
+    const favouriteBusiness = req.favouriteBusinesses;
+
+    try{
+        const reviews = await Review.find({ userId }); //get the reviews that were submitted by the user
+        const totalReviews = reviews.length; //get the total reviews.
+
+        const favourites = await User.find({ favouriteBusiness }); //get the businesses that were favourited by the user
+        const totalFavourites = favourites.length; //get the total favourites.
+
+        res.json({
+            totalReviews,
+            totalFavourites,
+        });
+    } catch (error){
+        console.error('Error fetching user metrics:', error);
+        res.status(500).json({ error: 'Server error' });
     }
 });
 

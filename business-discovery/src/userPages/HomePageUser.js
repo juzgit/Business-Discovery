@@ -11,7 +11,10 @@ const UserHomePage = () => {
 
     const [reviews, setReviews] = useState([]); //store reviews data.
     const [totalReviews, setTotalReviews] = useState(0); //store total reviews.
-    const [isModalOpen, setIsModalOpen] = useState(false); //to manage modal visibility.
+    const [favourites, setFavourites] = useState([]);
+    const [totalFavourites, setTotalFavourites] = useState(0);
+    const [isReviewModalOpen, setReviewIsModalOpen] = useState(false); //to review manage modal visibility.
+    const [isFavouriteModalOpen, setFavouriteIsModalOpen] = useState(false); //to manage favourite modal visibility.
 
     const fetchUserMetrics = async () => {
         try{
@@ -26,6 +29,7 @@ const UserHomePage = () => {
             if(response.ok){
                 const data = await response.json();
                 setTotalReviews(data.totalReviews); //update reviews count
+                setTotalFavourites(data.totalFavourites); //update favourites count
             }
         } catch(error){
             console.error('Error fetching user metrics:', error);
@@ -48,6 +52,7 @@ const UserHomePage = () => {
 
             if(response.ok){
                 const data = await response.json();
+                console.log('Fetched favourites data:', data);
                 setReviews(data); // set the reviews in the state
                 setTotalReviews(data.length); // update the total reviews count
             } else {
@@ -58,12 +63,44 @@ const UserHomePage = () => {
         }
     }
 
-    const ModalToggle = () => {
-        setIsModalOpen(!isModalOpen);
-        if (!isModalOpen){
-            fetchReviews(); //fetch reviews when the modal is opened
+    //Review modal
+    const ReviewModalToggle = () => {
+        setReviewIsModalOpen(!isReviewModalOpen);
+        if (!isReviewModalOpen){
+            fetchReviews(); //fetch and display reviews when the modal is opened.
+        }
+    };
+
+    //fetch the businesses that were favourited by the user.
+    const fetchFavourites = async () => {
+        try{
+            const token = localStorage.getItem('userToken');
+            const response = await fetch('/api/users/favourites', {
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if(response.ok){
+                const data = await response.json();
+                console.log('Fetched favourites data:', data);
+                setFavourites(data.favouriteBusiness);
+                setTotalFavourites(data.favouriteBusiness.length);
+            }else {
+                console.error('Error fetching favourites:', response.statusText);
+            }
+        } catch(error){
+            console.error('Error fetching favourites:', error);
         }
     }
+
+    const FavouriteModalToggle = () => {
+        setFavouriteIsModalOpen(!isFavouriteModalOpen);
+        if (!isFavouriteModalOpen){
+            fetchFavourites(); //fetch and display favourites when the modal is opened.
+        }
+    };
 
     return(
         <div className="userHomePage">
@@ -77,20 +114,16 @@ const UserHomePage = () => {
                     <div className="user-overview">
                         <h2>Overview</h2>
                         
-                        <div className="metric clickable" onClick={ModalToggle}>
+                        <div className="metric clickable" onClick={ReviewModalToggle}>
                             <p>Total Reviews Written</p>
                             <h4>{totalReviews}</h4>
                         </div>
 
-                        <div className="metric">
+                        <div className="metric clickable" onClick={FavouriteModalToggle}>
                             <p>Favourite</p>
-                            
+                            <h4>{totalFavourites}</h4>
                         </div>
 
-                        <div className="metric">
-                            <p>Promotions Viewed</p>
-                            
-                        </div>
                     </div>
 
                     <div className="recommended-business">
@@ -113,19 +146,19 @@ const UserHomePage = () => {
             </div>
 
             <Modal
-                isOpen={isModalOpen}
-                onRequestClose={ModalToggle}
+                isOpen={isReviewModalOpen}
+                onRequestClose={ReviewModalToggle}
                 contentLabel="User Reviews"
                 className='modal'
                 overlayClassName='modal-overlay'
             >
                 <h2>Your Reviews</h2>
-                <button onClick={ModalToggle} className="close-btn">X</button>
+                <button onClick={ReviewModalToggle} className="close-btn">X</button>
 
-                <div className="reviews-list">
+                <div className="modal-list">
                     {reviews.length > 0 ? (
                         reviews.map((review, index) => (
-                            <div key={index} className="review-card">
+                            <div key={index} className="modal-card">
                                 <h4>{review.businessId.businessName}</h4>
                                 <p>Rating: {review.rating}/5</p>
                                 <p>{review.comment}</p>
@@ -133,6 +166,29 @@ const UserHomePage = () => {
                         ))
                     ) : (
                         <p>No reviews found.</p>
+                    )}
+                </div>
+            </Modal>
+
+            <Modal
+                isOpen={isFavouriteModalOpen}
+                onRequestClose={FavouriteModalToggle}
+                className='modal'
+                overlayClassName='modal-overlay'
+            >
+                <h2>Your Favourited Businesses</h2>
+
+                <button onClick={FavouriteModalToggle} className='close-btn'>X</button>
+
+                <div className="modal-list">
+                    {favourites.length > 0 ? (
+                        favourites.map((favourite, index) => (
+                            <div key={index} className="modal-card">
+                                <h4>{favourite.businessName}</h4>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No favourites found.</p>
                     )}
                 </div>
             </Modal>
