@@ -15,6 +15,16 @@ const UserHomePage = () => {
     const [totalFavourites, setTotalFavourites] = useState(0);
     const [isReviewModalOpen, setReviewIsModalOpen] = useState(false); //to review manage modal visibility.
     const [isFavouriteModalOpen, setFavouriteIsModalOpen] = useState(false); //to manage favourite modal visibility.
+    const [favouritesLoading, setFavouritesLoading] = useState(true);
+
+
+    useEffect(() => {
+        const initialiseData = async () => {
+            await fetchFavourites();
+        };
+
+        initialiseData();
+    }, []);
 
     const fetchUserMetrics = async () => {
         try{
@@ -73,7 +83,9 @@ const UserHomePage = () => {
 
     //fetch the businesses that were favourited by the user.
     const fetchFavourites = async () => {
+        console.log('Fetching favourites...');
         try{
+            setFavouritesLoading(true);
             const token = localStorage.getItem('userToken');
             const response = await fetch('/api/users/favourites', {
                 method: 'GET',
@@ -84,14 +96,21 @@ const UserHomePage = () => {
 
             if(response.ok){
                 const data = await response.json();
-                console.log('Fetched favourites data:', data);
-                setFavourites(data.favouriteBusiness);
-                setTotalFavourites(data.favouriteBusiness.length);
+                console.log('API Response:', data);
+                //console.log('Fetched favourites data:', data);
+
+                const favouritesList = data.favouriteBusiness || [];
+                setFavourites(favouritesList);
+                setTotalFavourites(favouritesList.length);
             }else {
                 console.error('Error fetching favourites:', response.statusText);
             }
         } catch(error){
             console.error('Error fetching favourites:', error);
+            setTotalFavourites(0);
+        } finally {
+            console.log('Setting favouritesLoading to false.');
+            setFavouritesLoading(false);
         }
     }
 
@@ -99,6 +118,36 @@ const UserHomePage = () => {
         setFavouriteIsModalOpen(!isFavouriteModalOpen);
         if (!isFavouriteModalOpen){
             fetchFavourites(); //fetch and display favourites when the modal is opened.
+        }
+    };
+
+    const unfavouriteBusiness = async (businessId) => {
+        console.log('Unfavouriting business with ID:', businessId);
+        try{
+            const token = localStorage.getItem('userToken');
+            const response = await fetch(`/api/users/favourites/${businessId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            const data =  await response.json();
+            console.log('Response from server:', data);
+
+            if(response.ok){
+                //remove the business from favourites list
+                const updatedFavourites = favourites.filter(fav => fav._id !== businessId);
+                setFavourites(updatedFavourites); //update  the favourites state.
+                setTotalFavourites(updatedFavourites.length); //update the total favourites.
+                console.log('Updated favourites:', updatedFavourites);
+            } else {
+                console.error('Error unfavouriting business:', response.statusText);
+            }
+        } catch(error){
+            console.error('Error unfavouriting business:', error);
+        } finally {
+            setFavouritesLoading(false);
         }
     };
 
@@ -121,7 +170,7 @@ const UserHomePage = () => {
 
                         <div className="metric clickable" onClick={FavouriteModalToggle}>
                             <p>Favourite</p>
-                            <h4>{totalFavourites}</h4>
+                            <h4>{favouritesLoading ? 'Loading...' : totalFavourites === 0 ? '0' : totalFavourites}</h4>
                         </div>
 
                     </div>
@@ -185,6 +234,9 @@ const UserHomePage = () => {
                         favourites.map((favourite, index) => (
                             <div key={index} className="modal-card">
                                 <h4>{favourite.businessName}</h4>
+                                <button onClick={() => unfavouriteBusiness(favourite._id)} className="unfavourite-btn">
+                                    Unfavourite
+                                </button>
                             </div>
                         ))
                     ) : (

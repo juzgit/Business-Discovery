@@ -119,6 +119,7 @@ const UserDiscoverBusiness = () => {
         const method = isFavourited ? 'DELETE' : 'POST';
 
         try{
+            console.log(`Sending request to ${method} favourite for businessId: ${businessId}`);
             const response = await fetch(`/api/users/favourites/${businessId}`, {
                 method,
                 headers:{
@@ -174,7 +175,8 @@ const UserDiscoverBusiness = () => {
                                     Leave a Review
                                     </button>
 
-                                    <button onClick={() => FavouriteToggle(business._id, isFavourited)}>
+                                    <button onClick={() => FavouriteToggle(business._id, isFavourited)}
+                                        >
                                         {isFavourited ? 'Unfavourite' : 'Favourite'}
                                     </button>
                             </div>

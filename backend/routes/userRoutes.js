@@ -24,7 +24,7 @@ const userAuthenticate = (req, res, next) => {
 
     } catch(error){
         console.error('Token verification error:', error.message);
-        return res.status(401).json({ error: 'Invalid or expired soon' });
+        return res.status(401).json({ error: 'Invalid or expired token' });
     }
 
 };
@@ -170,14 +170,23 @@ router.post('/favourites/:businessId', userAuthenticate, async (req, res) => {
 router.delete('/favourites/:businessId', userAuthenticate, async (req, res) => {
     const userId = req.userId;
     const { businessId } = req.params;
+    console.log('Business ID:', businessId);
 
     try{
         const user = await User.findById(userId);
-        if(user.favouriteBusinesses.includes(businessId)){
-            user.favouriteBusinesses = user.favouriteBusinesses.filter(id => id !== businessId);
-            await user.save();
+
+        if(!user){
+            return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json({ message: 'Business removed from favourites' });
+
+        const businessIndex = user.favouriteBusinesses.indexOf(businessId);
+        if(businessIndex !== -1){
+            user.favouriteBusinesses.splice(businessIndex, 1);
+            await user.save();
+            return res.status(200).json({ message: 'Favourite removed.' });
+        }
+
+        res.status(400).json({ message: 'Business not found in favourites.' });
     } catch(error){
         console.error('Error removing from favourites:', error);
         res.status(500).json({ message: 'Server error', error: error.message });
