@@ -17,15 +17,6 @@ const UserHomePage = () => {
     const [isFavouriteModalOpen, setFavouriteIsModalOpen] = useState(false); //to manage favourite modal visibility.
     const [favouritesLoading, setFavouritesLoading] = useState(true);
 
-
-    useEffect(() => {
-        const initialiseData = async () => {
-            await fetchFavourites();
-        };
-
-        initialiseData();
-    }, []);
-
     const fetchUserMetrics = async () => {
         try{
             const token = localStorage.getItem('userToken');
@@ -101,18 +92,23 @@ const UserHomePage = () => {
 
                 const favouritesList = data.favouriteBusiness || [];
                 setFavourites(favouritesList);
-                setTotalFavourites(favouritesList.length);
+                setTotalFavourites(favouritesList.length || 0);
             }else {
                 console.error('Error fetching favourites:', response.statusText);
             }
         } catch(error){
             console.error('Error fetching favourites:', error);
+            setFavourites([]);
             setTotalFavourites(0);
         } finally {
             console.log('Setting favouritesLoading to false.');
             setFavouritesLoading(false);
         }
     }
+
+    useEffect(() => {
+        fetchFavourites();
+    }, []);
 
     const FavouriteModalToggle = () => {
         setFavouriteIsModalOpen(!isFavouriteModalOpen);
@@ -170,7 +166,7 @@ const UserHomePage = () => {
 
                         <div className="metric clickable" onClick={FavouriteModalToggle}>
                             <p>Favourite</p>
-                            <h4>{favouritesLoading ? 'Loading...' : totalFavourites === 0 ? '0' : totalFavourites}</h4>
+                            <h4>{favouritesLoading ? 'Loading...' : totalFavourites}</h4>
                         </div>
 
                     </div>
