@@ -11,11 +11,12 @@ const UserHomePage = () => {
 
     const [reviews, setReviews] = useState([]); //store reviews data.
     const [totalReviews, setTotalReviews] = useState(0); //store total reviews.
-    const [favourites, setFavourites] = useState([]);
-    const [totalFavourites, setTotalFavourites] = useState(0);
+    const [favourites, setFavourites] = useState([]); //store favourites data
+    const [totalFavourites, setTotalFavourites] = useState(0); //store total favourite count.
     const [isReviewModalOpen, setReviewIsModalOpen] = useState(false); //to review manage modal visibility.
     const [isFavouriteModalOpen, setFavouriteIsModalOpen] = useState(false); //to manage favourite modal visibility.
-    const [favouritesLoading, setFavouritesLoading] = useState(true);
+    const [favouritesLoading, setFavouritesLoading] = useState(true); //to manage laoding state for favourites
+    const [recommendations, setRecommendations] = useState([]); //store recommended businesses
 
     const fetchUserMetrics = async () => {
         try{
@@ -106,8 +107,33 @@ const UserHomePage = () => {
         }
     }
 
+    //fetch business recommendations based on what businesses they have favourited or commented on.
+    const fetchRecommendations = async () => {
+        try{
+            const token = localStorage.getItem('userToken');
+            const response = await fetch('/api/recommendations/businesses', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if(response.ok){
+                const data = await response.json();
+                setRecommendations(data.recommendations || []);
+            } else {
+                console.error('Error fetching recommendations', response.statusText);
+            }
+        } catch(error){
+            console.error('Error fetching recommendations:', error);
+        }
+    }
+
     useEffect(() => {
+        fetchUserMetrics();
+        fetchReviews();
         fetchFavourites();
+        fetchRecommendations();
     }, []);
 
     const FavouriteModalToggle = () => {
@@ -174,17 +200,15 @@ const UserHomePage = () => {
                     <div className="recommended-business">
                         <h2>Recommended for You</h2>
                         <ul>
-                            <li>
-                                <a href="#home">Business A</a> - A you business you might like
-                            </li>
-
-                            <li>
-                                <a href="#home">Business B</a> - A you business you might like
-                            </li>
-
-                            <li>
-                                <a href="#home">Business C</a> - A you business you might like
-                            </li>
+                            {recommendations.length > 0 ? (
+                                recommendations.map((business, index) => (
+                                    <li key={index}>
+                                        <p>{business.businessName} - A business you might like based on your interactions. </p>
+                                    </li>
+                                ))
+                            ) : (
+                                <li>No recommedations available at the moment.</li>
+                            )}
                         </ul>
                     </div>
                 </div>

@@ -34,12 +34,14 @@ const businessRoutes = require('./routes/businessUserRoutes');
 const categoryRoutes = require("./routes/categories");
 const promotionRoutes = require('./routes/promotionRoutes');
 const reviewRoutes = require('./routes/reviewsRoutes');
+const recommendationsRoutes = require('./routes/businessRecommendations');
 
 app.use('/api/users', userRoutes);
 app.use('/api/business', businessRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/promotions', promotionRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/recommendations', recommendationsRoutes);
 
 // start the server
 app.listen(PORT, () => {
