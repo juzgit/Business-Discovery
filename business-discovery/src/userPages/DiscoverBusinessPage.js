@@ -56,7 +56,8 @@ const UserDiscoverBusiness = () => {
         //Filter businesses based on search query
         setFilteredBusinesses(
             businesses.filter((business) => 
-                business.businessName.toLowerCase().includes(searchQuery.toLowerCase())
+                business.businessName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                business.address.toLowerCase().includes(searchQuery.toLowerCase())
             )
         );
       }, [searchQuery, businesses]);
