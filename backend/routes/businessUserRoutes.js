@@ -101,7 +101,7 @@ router.post('/login', async (req, res) => {
 //get all businesses
 router.get('/all', async (req, res) => {
     try{
-        const businesses = await Business.find();
+        const businesses = await Business.find().populate('category', 'name');
         res.status(200).json(businesses);
     } catch(error){
         res.status(500).json({ message: 'Server error', error: error.message });

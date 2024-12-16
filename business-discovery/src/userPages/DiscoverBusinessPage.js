@@ -167,7 +167,7 @@ const UserDiscoverBusiness = () => {
                             return(
                             <div key={business._id} className='business-card'>
                                 <h3>{business.businessName}</h3>
-                                <p>{business.businessType}</p>
+                                <p>{business.category.name}</p>
                                 <p>{business.address}</p>
                                 <button onClick={() => {
                                     setReviewForm(true);
