@@ -19,6 +19,8 @@ const UserDiscoverBusiness = () => {
 
     const [error, setError] = useState('');
     const [userFavourites, setUserFavourites] = useState([]);
+    const [promotions, setPromotions] = useState([]);
+    const [promotionsModal, setPromotionsModal] = useState(false);
 
 
     //fetch all the business to display them in the discover page
@@ -49,7 +51,19 @@ const UserDiscoverBusiness = () => {
         fetchBusinesses();
       }, []);
 
-
+      //fetch business promotions
+      const displayPromotionsModal = async (businessId) => {
+        try{
+            const response = await fetch(`/api/promotions/business/${businessId}`);
+            const data = await response.json();
+            setPromotions(data);
+            //display them in a modal
+            setPromotionsModal(true);
+        } catch(error){
+            console.error('Error fetching promotions:', error);
+            setError('Failed to load promotions. Please try again later.');
+        }
+      };
 
       //search query
       useEffect(() => {
@@ -180,6 +194,10 @@ const UserDiscoverBusiness = () => {
                                         >
                                         {isFavourited ? 'Unfavourite' : 'Favourite'}
                                     </button>
+
+                                    <button onClick={() => displayPromotionsModal(business._id)}>
+                                        View Promotions
+                                    </button>
                             </div>
                         );
                     })
@@ -230,6 +248,30 @@ const UserDiscoverBusiness = () => {
                     </div> 
                 </div>
             )}
+
+            {promotionsModal && (
+                <div className='review-form-layout'>
+                    <div className='review-form'>
+                        <h3>Promotions</h3>
+                        <ul>
+                            {promotions.length > 0 ? (
+                                promotions.map((promo, index) => (
+                                    <li key={index}>
+                                        <h3>{promo.title}</h3>
+                                        <p>{promo.type}</p>
+                                        <p>{promo.description}</p>
+                                    </li>
+                                ))
+                            ) : (
+                                <p>No promotions available.</p>
+                            )}
+                        </ul>
+                        <button onClick={() => setPromotionsModal(false)}>Close</button>
+                    </div>
+                </div>
+            )}
+
+
             </div>
 
         <Footer />

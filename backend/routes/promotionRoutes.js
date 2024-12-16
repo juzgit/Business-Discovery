@@ -124,4 +124,27 @@ router.delete("/:id", authenticateUser, async (req, res) => {
     }
 });
 
+//fetch promotions for each business (for the normal-end user to view)
+router.get('/business/:businessId', async (req, res) => {
+    const { businessId } = req.params;
+
+    try{
+        const promotions = await Promotion.find({ businessId });
+        //show a status of ok if there is no promotions for certain businesses.
+        if(promotions.length === 0){
+            return res.status(200).json([]);
+        }
+
+        const formattedPromotions = promotions.map((promotion) => ({
+            ...promotion.toObject(),
+            startDate: moment(promotion.startDate).format('YYYY-MM-DD hh:mm A'),
+            endDate: moment(promotion.endDate).format('YYYY-MM-DD hh:mm A'),
+        }));
+
+        res.json(formattedPromotions);
+    } catch(error){
+        res.status(400).json({ message: error.message });
+    }
+})
+
 module.exports = router;
