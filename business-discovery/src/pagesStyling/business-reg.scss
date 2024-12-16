@@ -114,4 +114,26 @@ $neutralColor2: #343A40;
             max-width: 100%;
         }
     }
+
+    .suggestions-list{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        border: 1px solid #ccc;
+        max-height: 150px;
+        overflow-y: auto;
+        background-color: $neutralColor1;
+        position: absolute;
+        z-index: 10;
+        width: 15%;
+    }
+
+    .suggestions-list li{
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .suggestions-list li:hover {
+        background-color: $primaryColor1;
+    }
 }

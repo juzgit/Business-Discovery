@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import '../pagesStyling/business-login.scss';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaHome } from "react-icons/fa";
 
 const BusinessLogin = () => {
     const [formData, setFormData] = useState({
@@ -93,6 +94,7 @@ const BusinessLogin = () => {
 
                 <button type='submit' className='submit-button'>Login</button>
                 <p>Don't have an account? <Link to="/business-register">Register here</Link></p>
+                <p><Link to="/"> <FaHome /> Back Home</Link></p>
             </form>
         </div>
     )

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../pagesStyling/business-reg.scss';
 import { Link, useNavigate } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
 
 const BusinessRegister = () => {
     const [formData, setFormData] = useState({
@@ -17,11 +18,49 @@ const BusinessRegister = () => {
 
     const [errors, setErrors] = useState({});
 
+    const [suggestions, setSuggestions] = useState([]);
+    const [selectedAddress, setSelectedAddress] = useState('');
+
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value });
+    //use the nomnatim OSM API for address suggestions
+
+    //fetch street suggestions entered by the user.
+    //suggestions limit is 5 and restricted in South Africa.
+    const fetchAddressSuggestions = async (query) => {
+        try{
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&addressdetails=1&limit=5&countrycodes=ZA`, {
+                headers: { 'User-Agent': 'BusinessDiscovery/1.0'},
+            }
+        );
+
+        //if the response is not ok, throw an error
+        if(!response.ok){
+            throw new Error('Error fetching address suggestions.');
+        }
+            //if response is successful, it is parsed as JSON.
+            const data = await response.json();
+            //update the dropdown with the suggested addresses.
+            setSuggestions(data);
+        } catch(error){
+            console.error('Error fetching address suggestions:', error);
+        }
     }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData({...formData, [name]: value });
+
+        //in the address input field
+        //show the address suggestions if the characters are more than 2.
+        if(name === 'address' && value.length > 2){
+            fetchAddressSuggestions(value);
+        } else if (name === 'address'){
+            //less than 2 show no suggestions
+            setSuggestions([]);
+        }
+    };
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -192,6 +231,24 @@ const BusinessRegister = () => {
                             className="form-input"
                             required
                             />
+
+                            {/**Dropdown suggestions */}
+                            {suggestions.length > 0 && (
+                                <ul className='suggestions-list'>
+                                    {suggestions.map((suggestion, index) => (
+                                        <li
+                                        key={index}
+                                        onClick={() => {
+                                            setSelectedAddress(suggestion.display_name);
+                                            setFormData({ ...formData, address: suggestion.display_name });
+                                            setSuggestions([]);
+                                        }}
+                                        >
+                                            {suggestion.display_name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                     </div>
 
 
@@ -218,6 +275,7 @@ const BusinessRegister = () => {
                
                 <button type="submit" className="submit-button">Add Business</button>
                 <p>Do have an account? <Link to="/business-login">Login here</Link></p>
+                <p><Link to="/"> <FaHome /> Back Home</Link></p>
 
             </form>
 
