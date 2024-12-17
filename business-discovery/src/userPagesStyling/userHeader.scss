@@ -57,40 +57,7 @@ $neutralColor2: #343A40;
             }
         }
     }
-
-    .navbar-search{
-        display: flex;
-        align-items: center;
-        margin-right: 100px;
-
-        .search-input{
-            padding: 5px 10px;
-            border: 1px solid $neutralColor1;
-            border-radius: 3px;
-            margin-right: 10px;
-            font-size: 14px;
-            background-color: $neutralColor1;
-            color: $neutralColor2;
-
-            &::placeholder{
-                color: $neutralColor2;
-            }
-        }
-
-        .submit-search{
-            background-color: $primaryColor1;
-            border: none;
-            padding: 5px 15px;
-            cursor: pointer;
-            border-radius: 3px;
-            color: $neutralColor1;
-
-            &:hover{
-                background-color: darken($neutralColor2, 10%);
-            }
-        }
-    }
-
+    
     .nav-profile{
         position: relative;
         display: flex;

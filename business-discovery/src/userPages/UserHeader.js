@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../userPagesStyling/userHeader.scss';
-import { FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 
 const UserNavBar = () => {
+
     const navigate = useNavigate();
 
     const Logout = async () =>{
@@ -13,7 +14,8 @@ const UserNavBar = () => {
         } catch(error){
             console.error('Error logging out:', error);
         }
-    }
+    };
+
 
     return(
         <div className="navbar">
@@ -28,13 +30,6 @@ const UserNavBar = () => {
                 <li><Link to="/user-discover">Discover</Link></li>
                 <li><Link to="/user-categories">Categories</Link></li>
             </ul>
-
-            <div className="navbar-search">
-                <input type="text" 
-                placeholder="Search businesses..."  
-                className="search-input" />
-                <button className="submit-search"> <FaSearch /> </button>
-            </div>
 
             <div className="nav-profile">
                 <FaUserCircle className="profile-icon" />
