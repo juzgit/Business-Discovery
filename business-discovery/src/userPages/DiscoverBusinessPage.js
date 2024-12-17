@@ -8,6 +8,8 @@ const UserDiscoverBusiness = () => {
     const [businesses, setBusinesses] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+    const [selectedBusiness, setSelectedBusiness] = useState(null); //click on the business name.
+    const [businessModal, setBusinessModal] = useState(false); // to view business details
     const [reviewForm, setReviewForm] = useState(false);
     const [chosenBusinessId, setChosenBusinessId] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,6 +52,26 @@ const UserDiscoverBusiness = () => {
 
         fetchBusinesses();
       }, []);
+
+      const openBusinessModal = async (businessId) => {
+        try{
+            const response = await fetch(`/api/business/profile/${businessId}`);
+            if(!response.ok){
+                throw new Error('Failed to fetch business details.');
+            }
+            const data = await response.json();
+            setSelectedBusiness(data);
+            setBusinessModal(true);
+        }  catch(error){
+            console.error('Error fetching business details:', error);
+            setError('Could not load business details. Please try again later.')
+        }
+      };
+
+      const closeModal = () => {
+        setBusinessModal(false);
+        setSelectedBusiness(null);
+      }
 
       //fetch business promotions
       const displayPromotionsModal = async (businessId) => {
@@ -179,7 +201,7 @@ const UserDiscoverBusiness = () => {
                         filteredBusinesses.map((business) => {
                             const isFavourited = userFavourites.includes(business._id);
                             return(
-                            <div key={business._id} className='business-card'>
+                            <div key={business._id} className='business-card' onClick={() => openBusinessModal(business._id)}>
                                 <h3>{business.businessName}</h3>
                                 <p>{business.category.name}</p>
                                 <p>{business.address}</p>
@@ -260,6 +282,9 @@ const UserDiscoverBusiness = () => {
                                         <h3>{promo.title}</h3>
                                         <p>{promo.type}</p>
                                         <p>{promo.description}</p>
+                                        <p>{promo.discount}%</p>
+                                        <p>From: {promo.startDate}</p>
+                                        <p>To: {promo.endDate}</p>
                                     </li>
                                 ))
                             ) : (
@@ -267,6 +292,20 @@ const UserDiscoverBusiness = () => {
                             )}
                         </ul>
                         <button onClick={() => setPromotionsModal(false)}>Close</button>
+                    </div>
+                </div>
+            )}
+
+
+            {businessModal && selectedBusiness && (
+                <div className='business-modal'>
+                    <div className='business-details'>
+                        <h2>Name: {selectedBusiness.businessName}</h2>
+                        <p>Description: {selectedBusiness.description}</p>
+                        <p>Hours: {selectedBusiness.hours}</p>
+                        <p>Phone: {selectedBusiness.phone}</p>
+                        <p>Website: {selectedBusiness.businessWebsite}</p>
+                        <button className='close-btn' onClick={closeModal}>Close</button>
                     </div>
                 </div>
             )}
