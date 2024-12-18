@@ -69,9 +69,6 @@ router.get('/businesses', userAuthenticate, async (req, res) => {
                 _id: { $nin: excludeBusinessIds },
                 category: { $in: allCategories },
             }).select('businessName category rating').limit(15);
-        }else {
-            //if the user has not interacted with the businesses (especially as a new user), show the higly rated businesses
-            recommendations = await Business.find().sort({ rating: -1 }).limit(10);
         }
 
         //sending the response to the client.

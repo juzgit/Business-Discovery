@@ -236,7 +236,7 @@ const UserHomePage = () => {
                                     </li>
                                 ))
                             ) : (
-                                <li>No recommedations available at the moment.</li>
+                                <li>No recommedations available at the moment. Interact with a few businesses to get recommendations.</li>
                             )}
                         </ul>
                     </div>
