@@ -29,8 +29,23 @@ const userAuthenticate = (req, res, next) => {
 
 };
 
+//only emails ending with "@gmail.com are allowed"
+const emailValidation = (req, res, next) => {
+    if(!req.body.emailAddress){
+        return res.status(403).json({ message: 'Invalid email.' })
+    }
+
+    const email = req.body.emailAddress;
+    console.log('Received email:', email);
+
+    if(!email.endsWith('@gmail.com')){
+        return res.status(400).json({ message: 'Only email addresses ending with "@gmail.com" are allowed.' });
+    }
+    next();
+};
+
 // Register user
-router.post('/register', async (req, res) => {
+router.post('/register', emailValidation, async (req, res) => {
     const { firstName, lastName, emailAddress, username, password } = req.body;
 
     if(!username || username.trim() === ""){
@@ -72,7 +87,7 @@ router.post('/register', async (req, res) => {
 });
 
 //user login
-router.post('/login', async (req, res) => {
+router.post('/login', emailValidation, async (req, res) => {
     const { emailAddress, password } = req.body;
 
     if(!emailAddress || emailAddress.trim() === ""){

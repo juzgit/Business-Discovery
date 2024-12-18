@@ -46,9 +46,11 @@ const UserHomePage = () => {
     //fetching business details
     const fetchBusinessDetails = async (businessId) => {
         console.log('Fetching details for:', businessId);
+        const token = localStorage.getItem('userToken');
         try{
             const response = await fetch(`/api/business/profile/${businessId}`, {
-                method: 'GET'
+                method: 'GET',
+                'Authorization': `Bearer ${token}`
             });
 
             if(response.ok){

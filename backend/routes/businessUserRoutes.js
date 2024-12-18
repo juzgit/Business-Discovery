@@ -31,15 +31,25 @@ const authenticateUser = async (req, res, next) => {
     }
 }
 
+//only emails ending with "@gmail.com are allowed"
+const emailValidation = (req, res, next) => {
+    const email = req.body.email;
+
+    if(!email || !email.endsWith('@gmail.com')){
+        return res.status(400).json({ message: 'Only email addresses ending with "@gmail.com" are allowed.' });
+    }
+    next();
+}; 
+
 //business register
-router.post('/register', async (req, res) => {
+router.post('/register', emailValidation, async (req, res) => {
 
     const { businessName, email, password, phone, address, businessType } = req.body;
 
     try{
         
 
-        if(!businessName || !email || !password || !businessType){
+        if(!businessName || !email || !password || !phone|| !address || !businessType){
             return res.status(400).json({ message: 'All required fields must be filled.' });
         }
 
@@ -66,7 +76,7 @@ router.post('/register', async (req, res) => {
         res.status(201).json({ message: 'Business registered successfully!' });
     } catch (error){
         res.status(500).json({ message: 'Server error', error: error.message });
-    }
+    } 
 });
 
 //business login
