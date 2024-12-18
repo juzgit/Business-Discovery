@@ -18,6 +18,11 @@ const UserHomePage = () => {
     const [favouritesLoading, setFavouritesLoading] = useState(true); //to manage laoding state for favourites
     const [recommendations, setRecommendations] = useState([]); //store recommended businesses
 
+    //to view the business details of the recommended businesses.
+    const [businessModal, setBusinessModal] = useState(false);
+    const [selectedBusiness, setSelectedBusiness] = useState(null);
+
+    //fetch the user metrics (total reviews and favourites)
     const fetchUserMetrics = async () => {
         try{
             const token = localStorage.getItem('userToken');
@@ -38,10 +43,29 @@ const UserHomePage = () => {
         }
     };
 
-    useEffect(() => {
-        fetchUserMetrics();
-    }, []);
+    //fetching business details
+    const fetchBusinessDetails = async (businessId) => {
+        console.log('Fetching details for:', businessId);
+        try{
+            const response = await fetch(`/api/business/profile/${businessId}`, {
+                method: 'GET'
+            });
 
+            if(response.ok){
+                const businessDetails = await response.json();
+                //store the business details of the selected business
+                setSelectedBusiness(businessDetails);
+                //open the business details modal
+                setBusinessModal(true);
+            }else {
+                console.error('Error fetching business details:', response.statusText);
+            }
+        } catch(error){
+            console.error('Error fetching business details:', error);
+        }
+    };
+
+    //fetch the reviews of the user.
     const fetchReviews = async () => {
         try{
             const token = localStorage.getItem('userToken');
@@ -136,6 +160,7 @@ const UserHomePage = () => {
         fetchRecommendations();
     }, []);
 
+    //favourites modal
     const FavouriteModalToggle = () => {
         setFavouriteIsModalOpen(!isFavouriteModalOpen);
         if (!isFavouriteModalOpen){
@@ -143,6 +168,7 @@ const UserHomePage = () => {
         }
     };
 
+    //to remove business from favourites
     const unfavouriteBusiness = async (businessId) => {
         console.log('Unfavouriting business with ID:', businessId);
         try{
@@ -202,8 +228,9 @@ const UserHomePage = () => {
                         <ul>
                             {recommendations.length > 0 ? (
                                 recommendations.map((business, index) => (
-                                    <li key={index}>
-                                        <p>{business.businessName} - A business you might like based on your interactions. </p>
+                                    //The list is clickable
+                                    <li key={index} onClick={() => fetchBusinessDetails(business._id)}>
+                                        <p>{business.businessName } - A business you might like based on your interactions. Click to view details. </p>
                                     </li>
                                 ))
                             ) : (
@@ -214,6 +241,8 @@ const UserHomePage = () => {
                 </div>
             </div>
 
+
+            {/**History of reviews Modal */}
             <Modal
                 isOpen={isReviewModalOpen}
                 onRequestClose={ReviewModalToggle}
@@ -239,6 +268,7 @@ const UserHomePage = () => {
                 </div>
             </Modal>
 
+            {/**saved Favourites modal */}
             <Modal
                 isOpen={isFavouriteModalOpen}
                 onRequestClose={FavouriteModalToggle}
@@ -263,6 +293,30 @@ const UserHomePage = () => {
                         <p>No favourites found.</p>
                     )}
                 </div>
+            </Modal>
+
+            {/**Business details modal */}
+            <Modal
+             isOpen={businessModal}
+             onRequestClose={()=> selectedBusiness(false)}
+             contentLabel="Business Details"
+             className='modal'
+             overlayClassName='modal-overlay'
+            >
+            
+            <button onClick={() => setBusinessModal(false)} className="close-btn">X</button>
+            {selectedBusiness ? (
+                <div>
+                    <h2>{selectedBusiness.businessName}</h2>
+                    <p><strong>Description:</strong> {selectedBusiness.description}</p>
+                    <p><strong>Address:</strong> {selectedBusiness.address}</p>
+                    <p><strong>Phone:</strong> {selectedBusiness.phone}</p>
+                    <p><strong>Category:</strong> {selectedBusiness.category.name}</p>
+                    <p><strong>Website:</strong> {selectedBusiness.businessWebsite}</p>
+                </div>
+            ) : (
+                <p>Loading business details...</p>
+            )}
             </Modal>
 
             <Footer />
