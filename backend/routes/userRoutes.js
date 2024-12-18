@@ -38,8 +38,10 @@ const emailValidation = (req, res, next) => {
     const email = req.body.emailAddress;
     console.log('Received email:', email);
 
-    if(!email.endsWith('@gmail.com')){
-        return res.status(400).json({ message: 'Only email addresses ending with "@gmail.com" are allowed.' });
+    const emailRegex = /^[a-zA-Z0-9._]+(?<!\.)@gmail\.com$/;
+
+    if(!emailRegex.test(email)){
+        return res.status(400).json({ message: 'Only email addresses with valid characters (letters, numbers, underscore, and periods) before "@gmail.com" and no trailing period are allowed.' });
     }
     next();
 };
