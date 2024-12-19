@@ -56,9 +56,18 @@ router.post('/register', emailValidation, async (req, res) => {
         }
 
         //check for existing Business
-        const existingBusiness = await Business.findOne({ email });
-        if(existingBusiness){
-            return res.status(400).json({ message: 'Email already in use.' });
+        //cannot duplicate business details of existing business
+        const [emailExists, businessNameExists] = await Promise.all([
+            Business.findOne({ email }),
+            Business.findOne({ businessName }),
+        ]);
+
+        if(emailExists){
+            return res.status(400).json({ message: 'Email already in use' });
+        }
+
+        if(businessNameExists){
+            return res.status(400).json({ message: 'Business name already in use' });
         }
 
         //hash the password

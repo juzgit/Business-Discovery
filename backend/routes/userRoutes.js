@@ -50,6 +50,7 @@ const emailValidation = (req, res, next) => {
 const usernameValidation = (req, res, next) => {
     const username = req.body.username;
     
+    //only alphanumeric, undescores and periods allowed (no special characters allowed)
     const usernameRegex = /^[a-zA-Z0-9._]+(?<!\.)$/;
 
     if(!usernameRegex.test(username)){
@@ -69,8 +70,16 @@ router.post('/register', emailValidation, usernameValidation, async (req, res) =
 
     try{
         //check if the user already exists
-        const userExists = await User.findOne({ emailAddress });
-        if (userExists) {
+        const [emailExists, usernameExists] = await Promise.all([
+            User.findOne({ emailAddress }),
+            User.findOne({ username })
+        ]);
+
+        if(emailExists){
+            return res.status(400).json({ message: 'Email already in use' });
+        }
+
+        if(usernameExists){
             return res.status(400).json({ message: 'Email already in use' });
         }
 
