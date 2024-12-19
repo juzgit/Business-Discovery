@@ -46,8 +46,21 @@ const emailValidation = (req, res, next) => {
     next();
 };
 
+//
+const usernameValidation = (req, res, next) => {
+    const username = req.body.username;
+    
+    const usernameRegex = /^[a-zA-Z0-9._]+(?<!\.)$/;
+
+    if(!usernameRegex.test(username)){
+        return res.status(400).json({ message: 'Username can only contain letters, numbers, underscores, and periods, and cannot end with a period or contain spaces or special characters.' });
+    }
+
+    next();
+}
+
 // Register user
-router.post('/register', emailValidation, async (req, res) => {
+router.post('/register', emailValidation, usernameValidation, async (req, res) => {
     const { firstName, lastName, emailAddress, username, password } = req.body;
 
     if(!username || username.trim() === ""){
