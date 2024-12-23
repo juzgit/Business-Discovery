@@ -50,7 +50,18 @@ const BusinessRegister = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        setFormData({...formData, [name]: value });
+        if(name === 'phone'){
+            //only numbers allowed
+            const formattedValue = value.replace(/\D/g,'');
+
+            //limit the length to 10 digits
+            if(formattedValue.length > 10){
+                return; //cannot put add more digits if the input is more than 10 digits.
+            }
+            setFormData({...formData, [name]: formattedValue });
+        } else {
+            setFormData({...formData, [name]: value})
+        }
 
         //in the address input field
         //show the address suggestions if the characters are more than 2.
@@ -82,12 +93,25 @@ const BusinessRegister = () => {
     const validate = () =>{
         const newErrors = {};
 
+        //throw errors if the input fields are empty.
         if(!formData.businessName) newErrors.businessName = 'Business Name is required';
         if(!formData.email) newErrors.email = 'Email is required';
         if(!formData.password) newErrors.password = 'Password is required';
+        //if the passwords do not match, throw an error.
         if(formData.password !== formData.confirmPassword)
             newErrors.confirmPassword = 'Passwords do not match';
         if(!formData.businessType) newErrors.businessType = 'Business Type is required';
+
+        //phone length must be 10 digits
+        //if no phone number is in the input
+        //throw an error
+        if(!formData.phone){
+            newErrors.phone = 'Phone number is required';
+        } else if(!/^\d{10}$/.test(formData.phone)){
+            newErrors.phone = 'Phone number must be exactly 10 digits.';
+        }
+
+
         return newErrors
     }
 
@@ -97,7 +121,12 @@ const BusinessRegister = () => {
         if(Object.keys(validationErrors).length > 0){
             setErrors(validationErrors)
         } else {
-            console.log('Form submitted:', formData)
+            const formattedData = {
+                ...formData,
+                //convert to South Africa's country code
+                phone: `+27{formData.phone.slice(1)}`, //converts 012345678 to +27712345678
+            };
+            console.log('Form submitted:', formattedData)
             
             try{
                 const response = await fetch ('/api/business/register', {
@@ -179,7 +208,7 @@ const BusinessRegister = () => {
                                 name="phone"
                                 value={formData.phone}
                                 onChange={handleChange}
-                                placeholder="Enter business phone number"
+                                placeholder="Enter business phone number e.g. 0712345678"
                                 className="form-input"
                                 required
                                 />
