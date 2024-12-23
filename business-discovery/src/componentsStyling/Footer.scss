@@ -47,3 +47,38 @@ $neutralColor2: #343A40;
     background-color: $neutralColor2;
     color: $neutralColor1;
 }
+
+@media (max-width: 768px){
+    .footer-links li{
+        display: block;
+        margin: 5px 0;
+    }
+
+    .footer-social{
+        display: block;
+        margin-top: 10px;
+    }
+
+    .footer-social a {
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .footer-content p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px){
+    .footer-content p{
+        font-size: 12px;
+    }
+
+    .footer-links li{
+        margin: 5px 0;
+    }
+
+    .footer-social a {
+        font-size: 12px;
+    }
+}
