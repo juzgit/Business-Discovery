@@ -69,5 +69,33 @@ $neutralColor2: #343A40;
                 background-color: darken($primaryColor1, 10%);
             }
         }
+
+        p{
+            margin-top: 1rem;
+    
+            a{
+                color: $primaryColor1;
+                text-decoration: none;
+    
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px){
+        .business-login-form{
+            padding: 1rem;
+            gap: 1rem;
+
+            .form-input{
+                font-size: 0.9rem;
+            }
+
+            .submit-button{
+                font-size: 0.9rem;
+            }
+        }
     }
 }
