@@ -10,13 +10,11 @@ $neutralColor2: #343A40;
     justify-content: space-between;
     align-items: center;
     background-color: $primaryColor1;
-    padding: 10px 20px;
     color: $neutralColor1;
-    width: 97%;
+    width: 100%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
     .navbar-name{
-        margin-left: 50px;
         
         h1{
             font-size: 24px;
@@ -68,6 +66,7 @@ $neutralColor2: #343A40;
         .profile-icon{
             font-size: 24px;
             color: $neutralColor1;
+            margin-bottom: 8px;
 
             &:hover{
                 color: $neutralColor2;
@@ -114,6 +113,59 @@ $neutralColor2: #343A40;
 
         &:hover .profile-dropdown{
             display: block;
+        }
+    }
+
+    @media (max-width: 768px){
+        flex-direction: column;
+        align-items: flex-start;
+
+        .navbar-name h1{
+            font-size: 20px;
+        }
+
+        .navbar-menu{
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+
+            li{
+                width: 100%;
+                margin: 5px 0;
+
+                a{
+                    padding: 10px 15px;
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .nav-profile{
+            margin-top: 10px;
+            align-self: center;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px){
+        .navbar-name h1{
+            font-size: 18px;
+        }
+
+        .navbar-menu li a {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+
+        .nav-profile .profile-icon{
+            justify-content: center;
+            .profile-icon{
+                font-size: 20px;
+            }
+        }
+
+        .profile-dropdown{
+            width: 140px;
         }
     }
 }
