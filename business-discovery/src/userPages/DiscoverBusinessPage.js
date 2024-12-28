@@ -23,6 +23,7 @@ const UserDiscoverBusiness = () => {
     const [userFavourites, setUserFavourites] = useState([]);
     const [promotions, setPromotions] = useState([]);
     const [promotionsModal, setPromotionsModal] = useState(false);
+    const [loading, setLoading] = useState(true);
 
 
     //fetch all the business to display them in the discover page
@@ -47,6 +48,8 @@ const UserDiscoverBusiness = () => {
             } catch(error){
                 console.error('Error fetching businesses:', error);
                 setError('Failed to load businesses. Please try again later.');
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -184,48 +187,55 @@ const UserDiscoverBusiness = () => {
 
                 <UserNavBar />
                 
-                <div className='discover-header'>
-                    <h2 className='discover-heading'>Discover Local Businesses</h2>
-                    <input 
-                    type='text'
-                    placeholder='Search for businesses...'
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    />
+            <div className='discover-content'>
+                    <div className='discover-header'>
+                        <h2 className='discover-heading'>Discover Local Businesses</h2>
+                        <input 
+                        type='text'
+                        placeholder='Search for businesses...'
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        />
 
-                    <button className='search-btn'> <FaSearch /> </button>
-                </div>
+                        <button className='search-btn'> <FaSearch /> </button>
+                    </div>
 
-                <div className='business-list'>
-                    {filteredBusinesses.length > 0 ? (
-                        filteredBusinesses.map((business) => {
-                            const isFavourited = userFavourites.includes(business._id);
-                            return(
-                            <div key={business._id} className='business-card' onClick={() => openBusinessModal(business._id)}>
-                                <h3>{business.businessName}</h3>
-                                <p>{business.category.name}</p>
-                                <p>{business.address}</p>
-                                <button onClick={() => {
-                                    setReviewForm(true);
-                                    setChosenBusinessId(business._id);
-                                }}>
-                                    Leave a Review
-                                    </button>
+                    <div className='business-list'>
+                        {loading ? (
+                            <p>Loading businesses...</p>
+                        ):(
+                        
+                        
+                        filteredBusinesses.length > 0 ? (
+                            filteredBusinesses.map((business) => {
+                                const isFavourited = userFavourites.includes(business._id);
+                                return(
+                                <div key={business._id} className='business-card' onClick={() => openBusinessModal(business._id)}>
+                                    <h3>{business.businessName}</h3>
+                                    <p>{business.category.name}</p>
+                                    <p>{business.address}</p>
+                                    <button onClick={() => {
+                                        setReviewForm(true);
+                                        setChosenBusinessId(business._id);
+                                    }}>
+                                        Leave a Review
+                                        </button>
 
-                                    <button onClick={() => FavouriteToggle(business._id, isFavourited)}
-                                        >
-                                        {isFavourited ? 'Unfavourite' : 'Favourite'}
-                                    </button>
+                                        <button onClick={() => FavouriteToggle(business._id, isFavourited)}
+                                            >
+                                            {isFavourited ? 'Unfavourite' : 'Favourite'}
+                                        </button>
 
-                                    <button onClick={() => displayPromotionsModal(business._id)}>
-                                        View Promotions
-                                    </button>
-                            </div>
-                        );
-                    })
-                    ) : (
-                        <p>No businesses found</p>
-                    )}
+                                        <button onClick={() => displayPromotionsModal(business._id)}>
+                                            View Promotions
+                                        </button>
+                                </div>
+                            );
+                        })
+                        ) : (
+                            <p>No businesses found</p>
+                        ))}
+                    </div>
                 </div>
 
                 {reviewForm && (
