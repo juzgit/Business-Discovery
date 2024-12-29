@@ -18,6 +18,8 @@ $neutralColor2: #343A40;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 500px;
 
         .profile-info{
             display:flex;
@@ -39,6 +41,7 @@ $neutralColor2: #343A40;
                 text-align: center;
                 background-color: $primaryColor1;
                 padding: 5px;
+                word-wrap: break-word;
             }
 
             .form-group{
@@ -115,5 +118,60 @@ $neutralColor2: #343A40;
         svg{
             margin-left: 5px;
         }
+    }
+}
+
+@media (max-width: 768px){
+    .profile-page{
+        padding: 5px;
+    }
+
+    .profile-header{
+        width: 100%;
+        padding: 15px;
+    }
+
+    .form-group{
+        input,
+        textarea{
+            font-size: 12px;
+            padding: 8px;
+        }
+    }
+
+    .save-btn,
+    .edit-btn,
+    .logout-btn{
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px){
+    .profile-header{
+        padding: 10px;
+    }
+
+    h2{
+        font-size: 20px;
+    }
+
+    p{
+        font-size: 14px;
+    }
+
+    .form-group{
+        input,
+        textarea{
+            padding: 60px;
+            font-size: 12px;
+        }
+    }
+
+    .save-btn,
+    .edit-btn,
+    .logout-btn{
+        padding: 6px 10px;
+        font-size: 12px;
     }
 }
