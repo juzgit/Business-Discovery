@@ -3,164 +3,141 @@ $neutralColor1: #F8F9FA;
 $neutralColor2: #343A40;
 
 .business-home {
+  background-color: $neutralColor1;
+  color: $neutralColor2;
+  font-family: Arial, sans-serif;
+}
+
+.business-header {
+  background-color: $primaryColor1;
+  padding: 10px 20px;
+}
+
+.dashboard-container {
+  margin: 20px;
+}
+
+.dashboard-heading {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard {
   display: flex;
   flex-direction: column;
-  background-color: $neutralColor1;
-  font-family: Arial, sans-serif;
+  align-items: center;
 
-  .business-header {
-    background-color: $primaryColor1;
-    color: $neutralColor1;
-    padding: 10px 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  .main-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  .dashboard-container {
-    margin: 20px;
+  .metrics {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
 
-    .heading-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 150px; // Adjust for desired height
-      background-color: $primaryColor1;
-      color: $neutralColor1;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
+    .metric {
+      background-color: $neutralColor1;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
 
-      .user-dashboard {
-        font-size: 2.5rem;
-        font-weight: bold;
+      h3 {
+        font-size: 1.8rem;
+        color: $neutralColor2;
       }
-    }
 
-    .dashboard {
-      display: flex;
+      ul {
+        padding-left: 20px;
+        list-style-type: none;
+        margin-top: 10px;
 
-      .main-content {
-        flex: 1;
-        padding: 20px;
-        background-color: $neutralColor1;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        li {
+          margin-bottom: 10px;
 
-        .metrics {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 20px;
+          h4 {
+            font-size: 1.2rem;
+          }
 
-          .metric {
-            background-color: $primaryColor1;
-            border: 1px solid darken($primaryColor1, 10%);
-            border-radius: 8px;
-            padding: 20px;
-            color: $neutralColor2;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-
-            &:hover {
-              transform: translateY(-5px);
-              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            }
-
-            h3 {
-              font-size: 1.2rem;
-              margin-bottom: 10px;
-            }
-
-            ul {
-              list-style: none;
-              padding: 0;
-
-              li {
-                font-size: 0.9rem;
-                margin: 5px 0;
-              }
-            }
-
-            p {
-              font-size: 1rem;
-              margin-top: 10px;
-            }
-
-            .button-group {
-              margin-top: 15px;
-              padding: 10px 15px;
-              background-color: darken($primaryColor1, 10%);
-              color: $neutralColor1;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-              font-size: 0.9rem;
-
-              a{
-                text-decoration: none;
-                color: $neutralColor1;
-              }
-
-              &:hover {
-                background-color: lighten($primaryColor1, 5%);
-              }
-            }
+          p {
+            font-size: 1rem;
           }
         }
       }
+
+      button {
+        background-color: $primaryColor1;
+        color: $neutralColor1;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+        margin-top: 15px;
+
+        a {
+          color: $neutralColor1;
+          text-decoration: none;
+        }
+
+        &:hover {
+          background-color: darken($primaryColor1, 10%);
+        }
+      }
     }
   }
 }
 
-@media screen and (max-width: 768px){
-    .dashboard{
-        flex-direction: column;
+// Responsive styles
+@media (max-width: 768px) {
+  .dashboard-heading {
+    font-size: 2rem;
+  }
 
-    }
+  .metrics {
+    flex-direction: column;
+    gap: 15px;
+  }
 
-    .heading-container{
-        height: auto;
-        padding: 20px 10px;
+  .metric {
+    width: 100%;
+    max-width: 350px;
+  }
 
-        .user-dashboard{
-            font-size: 2rem;
-        }
-    }
+  .button-group {
+    width: 100%;
+  }
 }
 
-@media screen and (max-width: 480px){
-    .dashboard{
-        .main-content{
-            padding: 10px;
-        }
+@media (max-width: 480px) {
+  .dashboard-heading {
+    font-size: 1.6rem;
+  }
 
-        .metrics{
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
+  .metrics {
+    gap: 10px;
+  }
 
-        .metric{
-            padding: 15px;
+  .metric {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 10px;
+  }
 
-            h3{
-                font-size: 1rem;
-            }
+  button {
+    padding: 8px 12px;
+  }
+}
 
-            p{
-                font-size: 1rem;
-            }
-
-            .reviews-button{
-                font-size: 0.8rem;
-                padding: 8px 10px;
-            }
-        }
-    }
-
-    .heading-container{
-        padding: 10px;
-
-        .user-dashboard{
-            font-size: 1.5rem;
-        }
-    }
+@media (max-width: 320px){
+  .metric{
+    margin: 0 15px;
+  }
 }
