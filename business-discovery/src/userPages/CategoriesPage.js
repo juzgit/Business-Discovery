@@ -15,10 +15,12 @@ const CategoriesPage = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loadingCategories, setLoadingCategories] = useState(false);
     
     //fetch all the categories
     useEffect(() => {
         const fetchCategories = async () => {
+            setLoadingCategories(true);
             try{
                 const response = await fetch('/api/categories');
                 if(!response.ok){
@@ -29,6 +31,9 @@ const CategoriesPage = () => {
             } catch(error){
                 setError(error.message);
                 console.error("Error fetching categories:", error);
+            } finally{
+                //don't show the loading message when the categories have been displayed
+                setLoadingCategories(false);
             }
         };
 
@@ -93,7 +98,10 @@ const CategoriesPage = () => {
                         {error && <p className="error-message">{error}</p>}
 
                         <div className="categories-list">
-                            {categories.map((category) => (
+                            {loadingCategories ? (
+                                <p>Loading categories...</p>
+                            ) : (
+                                categories.map((category) => (
                                 <div key={category._id} className="category-card">
                                     <div className="category-info">
                                         <h3>{category.name}</h3>
@@ -103,7 +111,8 @@ const CategoriesPage = () => {
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                                ))
+                            )}
                         </div>
                     
 
@@ -155,7 +164,7 @@ const CategoriesPage = () => {
                                 <button className="close-modal" onClick={closeModal}>Close</button>
                         </Modal>
                 </div>
-                <Footer />
+                <Footer className='footer' />
         </div>
 
     );

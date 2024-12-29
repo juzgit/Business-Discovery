@@ -2,14 +2,19 @@ $primaryColor1: #92be9d;
 $neutralColor1: #F8F9FA;
 $neutralColor2: #343A40;
 
+html, body, #root{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .categories-page{
     background-color: $neutralColor1;
     color: $neutralColor2;
     font-family: 'Arial', sans-serif;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    min-height: 100vh;
 
     .category-heading{
         font-size: 2rem;
@@ -19,10 +24,13 @@ $neutralColor2: #343A40;
     }
 
     .categories-list{
-        display: grid;
-        grid-template-columns: repeat(2, auto);
-        gap: 10px;
+        flex-grow: 1;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
         justify-content: center;
+        margin-bottom: 20px;
 
         .category-card{
             background-color: $primaryColor1;
@@ -76,6 +84,10 @@ $neutralColor2: #343A40;
                         margin-left: 5px;
                     }
                 }
+            }
+
+            .footer{
+                margin-top: auto;
             }
         }
     }
@@ -177,4 +189,125 @@ $neutralColor2: #343A40;
         font-size: 1.2rem;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .categories-page {
+        padding: 10px;
+
+        .category-heading {
+            font-size: 1.5rem; // Smaller heading
+        }
+
+        .categories-list {
+            padding: 10px;
+            gap: 10px; // Reduce spacing between cards
+
+            .category-card {
+                width: calc(50% - 10px); 
+                max-width: 300px;
+                height: auto;
+                padding: 15px;
+                box-sizing: border-box;
+
+                .category-info {
+                    h3 {
+                        font-size: 1.2rem; // Smaller heading inside cards
+                    }
+
+                    p {
+                        font-size: 0.9rem; // Smaller description text
+                    }
+
+                    .explore-button {
+                        padding: 8px 10px;
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+
+        .modal {
+            width: 90%; // Shrink modal width for smaller screens
+            padding: 15px;
+
+            h3 {
+                font-size: 1.4rem;
+            }
+
+            ul {
+                font-size: 0.9rem;
+            }
+
+            .close-modal {
+                font-size: 1rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .categories-page {
+        .category-heading {
+            font-size: 1.3rem;
+        }
+
+        .categories-list {
+            flex-direction: column; // Stack items vertically
+        }
+
+        .modal {
+            width: 95%;
+            padding: 10px;
+        }
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .categories-page {
+        padding: 5px;
+
+        .category-heading {
+            font-size: 1.2rem;
+        }
+
+        .categories-list {
+            padding: 5px;
+            gap: 5px;
+
+            .category-card {
+                width: 100%; // Take full width
+                height: auto;
+
+                .category-info {
+                    h3 {
+                        font-size: 1rem;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                    }
+
+                    .explore-button {
+                        font-size: 0.8rem;
+                        padding: 5px 8px;
+                    }
+                }
+            }
+        }
+
+        .modal {
+            width: 95%;
+            padding: 10px;
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            .close-modal {
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+
 
