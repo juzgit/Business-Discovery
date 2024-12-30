@@ -19,8 +19,10 @@ const BusinessProfile = () => {
         const token = localStorage.getItem('businessToken');
         console.log('businessToken:', token);
 
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
-            const response = await fetch('/api/business/profile', {
+            const response = await fetch(`${backendUrl}/api/business/profile`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -59,8 +61,11 @@ const BusinessProfile = () => {
         e.preventDefault();
         const token = localStorage.getItem('businessToken');
         console.log('Token:', token);
+
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
-            const response = await fetch('/api/business/update', {
+            const response = await fetch(`${backendUrl}/api/business/update`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

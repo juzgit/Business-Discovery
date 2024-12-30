@@ -12,9 +12,12 @@ const BusinessUserHP = () => {
 
     useEffect(() => {
         const fetchPromotions = async () => {
+
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
+
             try{
                 const token = localStorage.getItem('businessToken');
-                const response = await fetch('/api/promotions', {
+                const response = await fetch(`${backendUrl}/api/promotions`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -27,9 +30,12 @@ const BusinessUserHP = () => {
         };
 
         const fetchReviews = async () => {
+
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
+
             try{
                 const token = localStorage.getItem('businessToken');
-                const response = await fetch('/api/reviews', {
+                const response = await fetch(`${backendUrl}/api/reviews`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

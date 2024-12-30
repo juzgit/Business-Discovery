@@ -20,9 +20,11 @@ const BusinessReviews = () => {
                 return;
             }
 
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
+
             //fetching reviews related to a specific business
             try{
-                const response = await fetch(`/api/reviews?businessId=${businessId}`, {
+                const response = await fetch(`${backendUrl}/api/reviews?businessId=${businessId}`, {
                     method: 'GET',
                     headers: {
                         //validate the business user.

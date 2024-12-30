@@ -38,8 +38,10 @@ const UserRegister = () =>{
 
         console.log('Submitting form data:', formData);
 
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
-            const response = await fetch('/api/users/register', {
+            const response = await fetch(`${backendUrl}/api/users/register`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json' },

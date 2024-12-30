@@ -21,8 +21,10 @@ const CategoriesPage = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             setLoadingCategories(true);
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
+
             try{
-                const response = await fetch('/api/categories');
+                const response = await fetch(`${backendUrl}/api/categories`);
                 if(!response.ok){
                     throw new Error(`Error: ${response.status}`);
                 }
@@ -44,9 +46,12 @@ const CategoriesPage = () => {
     const fetchBusinesses = async (categoryId) => {
         console.log('Category ID:', categoryId);
         setLoading(true); //start loading
+
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
             console.log('Fetching businesses for category:', categoryId); 
-            const response = await fetch(`/api/business/by-category/${categoryId}`);
+            const response = await fetch(`${backendUrl}/api/business/by-category/${categoryId}`);
             const businessData = await response.json();
             if(!response.ok){
                 if(businessData.length === 0){

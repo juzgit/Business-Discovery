@@ -24,9 +24,11 @@ const UserHomePage = () => {
 
     //fetch the user metrics (total reviews and favourites)
     const fetchUserMetrics = async () => {
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
             const token = localStorage.getItem('userToken');
-            const response = await fetch('/api/users/metrics', {
+            const response = await fetch(`${backendUrl}/api/users/metrics`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -47,8 +49,9 @@ const UserHomePage = () => {
     const fetchBusinessDetails = async (businessId) => {
         console.log('Fetching details for:', businessId);
         const token = localStorage.getItem('userToken');
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
         try{
-            const response = await fetch(`/api/business/profile/${businessId}`, {
+            const response = await fetch(`${backendUrl}/api/business/profile/${businessId}`, {
                 method: 'GET',
                 'Authorization': `Bearer ${token}`
             });
@@ -69,9 +72,10 @@ const UserHomePage = () => {
 
     //fetch the reviews of the user.
     const fetchReviews = async () => {
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
         try{
             const token = localStorage.getItem('userToken');
-            const response = await fetch('/api/reviews/my-reviews', {
+            const response = await fetch(`${backendUrl}/api/reviews/my-reviews`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -102,10 +106,11 @@ const UserHomePage = () => {
     //fetch the businesses that were favourited by the user.
     const fetchFavourites = async () => {
         console.log('Fetching favourites...');
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
         try{
             setFavouritesLoading(true);
             const token = localStorage.getItem('userToken');
-            const response = await fetch('/api/users/favourites', {
+            const response = await fetch(`${backendUrl}/api/users/favourites`, {
                 method: 'GET',
                 headers:{
                     Authorization: `Bearer ${token}`
@@ -135,9 +140,10 @@ const UserHomePage = () => {
 
     //fetch business recommendations based on what businesses they have favourited or commented on.
     const fetchRecommendations = async () => {
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
         try{
             const token = localStorage.getItem('userToken');
-            const response = await fetch('/api/recommendations/businesses', {
+            const response = await fetch(`${backendUrl}/api/recommendations/businesses`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -173,9 +179,10 @@ const UserHomePage = () => {
     //to remove business from favourites
     const unfavouriteBusiness = async (businessId) => {
         console.log('Unfavouriting business with ID:', businessId);
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
         try{
             const token = localStorage.getItem('userToken');
-            const response = await fetch(`/api/users/favourites/${businessId}`, {
+            const response = await fetch(`${backendUrl}/api/users/favourites/${businessId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,

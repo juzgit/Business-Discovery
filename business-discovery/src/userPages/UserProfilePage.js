@@ -11,9 +11,10 @@ const UserProfile = () => {
     const [updatedData, setUpdatedData] = useState(userData);
 
     const fetchUserProfile = async () => {
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
         try{
             const token = localStorage.getItem('userToken');
-            const response = await fetch('/api/users/profile', {
+            const response = await fetch(`${backendUrl}/api/users/profile`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -36,9 +37,11 @@ const UserProfile = () => {
     const updateUserProfile = async (e) => {
         e.preventDefault();
 
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
             const token = localStorage.getItem('userToken');
-            const response = await fetch('/api/users/update', {
+            const response = await fetch(`${backendUrl}/api/users/update`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

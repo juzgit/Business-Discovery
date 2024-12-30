@@ -75,8 +75,9 @@ const BusinessRegister = () => {
 
     useEffect(() => {
         const fetchCategories = async () => {
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
             try{
-                const response = await fetch('/api/categories');
+                const response = await fetch(`${backendUrl}/api/categories`);
                 if(!response.ok){
                     throw new Error(`Error: ${response.status}`);
                 }
@@ -127,9 +128,11 @@ const BusinessRegister = () => {
                 phone: `+27{formData.phone.slice(1)}`, //converts 012345678 to +27712345678
             };
             console.log('Form submitted:', formattedData)
+
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
             
             try{
-                const response = await fetch ('/api/business/register', {
+                const response = await fetch (`${backendUrl}/api/business/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

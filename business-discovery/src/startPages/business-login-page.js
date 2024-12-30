@@ -33,8 +33,10 @@ const BusinessLogin = () => {
             console.log('Form Submitted:', formData);
             //Add API call logic here to peform authentication
 
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
+
             try{
-                const response = await fetch('/api/business/login', {
+                const response = await fetch(`${backendUrl}/api/business/login`, {
                     method: 'POST',
                     headers:{
                         'Content-Type': 'application/json',

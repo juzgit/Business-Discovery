@@ -12,11 +12,14 @@ const UserHeroSection = () => {
     //get the user's firts name and last name
     useEffect(() => {
         const fetchUserProfile = async () => {
+
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
+            
             try{
                 const token = localStorage.getItem('userToken');
 
                 //make fetch request to the backend
-                const response = await fetch('/api/users/profile', {
+                const response = await fetch(`${backendUrl}/api/users/profile`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,

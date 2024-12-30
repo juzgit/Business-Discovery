@@ -31,6 +31,9 @@ const BusinessPromotions = () => {
     //fetching all the promotions
     useEffect(() => {
         const fetchPromotions = async () => {
+
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
+
             try{
 
                 const token = localStorage.getItem('businessToken');
@@ -40,7 +43,7 @@ const BusinessPromotions = () => {
                     throw new Error('No token found. Please log in again.');
                 }
                 console.log('Fetching promotions...');
-                const response = await fetch('/api/promotions', {
+                const response = await fetch(`${backendUrl}/api/promotions`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -75,13 +78,15 @@ const BusinessPromotions = () => {
             return;
         } 
 
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
             const token = localStorage.getItem('businessToken');
             if(!token){
                 throw new Error('No token found. Please log in again.');
             }
             if(editPromotion){
-                const response = await fetch(`/api/promotions/${promotionsList[editIndex]._id}`,
+                const response = await fetch(`${backendUrl}/api/promotions/${promotionsList[editIndex]._id}`,
                     {
                         method: "PUT",
                         headers: {
@@ -103,7 +108,7 @@ const BusinessPromotions = () => {
                 setEditPromotion(false);
                 setEditIndex(null);
             } else {
-                const response = await fetch('/api/promotions', {
+                const response = await fetch(`${backendUrl}/api/promotions`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -135,12 +140,15 @@ const BusinessPromotions = () => {
     };
 
     const handleDelete = async (id) => {
+
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
             const token = localStorage.getItem('businessToken');
             if(!token){
                 throw new Error('No token found. Please log in again.');
             }
-            const response = await fetch(`/api/promotions/${id}`, {
+            const response = await fetch(`${backendUrl}/api/promotions/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': `Bearer ${token}`,

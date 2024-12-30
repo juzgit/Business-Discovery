@@ -29,14 +29,16 @@ const UserDiscoverBusiness = () => {
     //fetch all the business to display them in the discover page
       useEffect(() => {
         const fetchBusinesses = async () => {
+
+            const backendUrl = 'https://business-discovery-backend.onrender.com';
             try{
-                const response = await fetch('/api/business/all');
+                const response = await fetch(`${backendUrl}/api/business/all`);
                 const data = await response.json();
                 setBusinesses(data);
                 setFilteredBusinesses(data);
 
                 const token = localStorage.getItem('userToken');
-                const userResponse = await fetch('/api/users/favourites', {
+                const userResponse = await fetch(`${backendUrl}/api/users/favourites`, {
                     headers: {
                         Authorization : `Bearer ${token}`,
                     }
@@ -57,8 +59,11 @@ const UserDiscoverBusiness = () => {
       }, []);
 
       const openBusinessModal = async (businessId) => {
+
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
-            const response = await fetch(`/api/business/profile/${businessId}`);
+            const response = await fetch(`${backendUrl}/api/business/profile/${businessId}`);
             if(!response.ok){
                 throw new Error('Failed to fetch business details.');
             }
@@ -78,8 +83,11 @@ const UserDiscoverBusiness = () => {
 
       //fetch business promotions
       const displayPromotionsModal = async (businessId) => {
+
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         try{
-            const response = await fetch(`/api/promotions/business/${businessId}`);
+            const response = await fetch(`${backendUrl}/api/promotions/business/${businessId}`);
             const data = await response.json();
             setPromotions(data);
             //display them in a modal
@@ -117,9 +125,11 @@ const UserDiscoverBusiness = () => {
             return;
         }
 
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
+
         //posting reviews
         try{
-            const response = await fetch('/api/reviews', {
+            const response = await fetch(`${backendUrl}/api/reviews`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -157,10 +167,11 @@ const UserDiscoverBusiness = () => {
         //if true, the method will be set to delete
         //if false the method will be set to post
         const method = isFavourited ? 'DELETE' : 'POST';
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
 
         try{
             console.log(`Sending request to ${method} favourite for businessId: ${businessId}`);
-            const response = await fetch(`/api/users/favourites/${businessId}`, {
+            const response = await fetch(`${backendUrl}/api/users/favourites/${businessId}`, {
                 method,
                 headers:{
                     Authorization: `Bearer ${token}`,

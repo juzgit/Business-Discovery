@@ -20,10 +20,12 @@ const UserLogin = () => {
 
     const submitLogin = async (e) =>{
         e.preventDefault()
-        console.log('Login Attempt', formData)
+        console.log('Login Attempt', formData);
+
+        const backendUrl = 'https://business-discovery-backend.onrender.com';
         //Add API here for user authentication
         try{
-            const response = await fetch('/api/users/login', {
+            const response = await fetch(`${backendUrl}/api/users/login`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
