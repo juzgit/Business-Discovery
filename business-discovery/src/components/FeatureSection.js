@@ -24,8 +24,8 @@ const FeaturesSection = () => {
                     <h3 className='features-section__block-title'>Business Features</h3>
                     <ul className='features-section__list'>
                         <li className='features-section__item'>Create a profile and showcase your business.</li>
-                        <li className='features-section__item'>Promote offers, discounts, and events to attract.</li>
-                        <li className='features-section__item'>Manage customer reviews and track your performance with analytics.</li>
+                        <li className='features-section__item'>Promote discounts to attract customers.</li>
+                        <li className='features-section__item'>View customer reviews and track your performance with reviews submitted by customers.</li>
                     </ul>
                 </div>
             
